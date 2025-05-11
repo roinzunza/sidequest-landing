@@ -3,88 +3,65 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SideQuest – Get hired. No resume required.</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: #f6f9fc;
-      color: #111;
-    }
-    header {
-      padding: 2rem;
-      text-align: center;
-      background-color: #e6f0ff;
-    }
-    header h1 {
-      font-size: 2.5rem;
-      margin: 0;
-    }
-    header p {
-      font-size: 1.1rem;
-      margin: 0.75rem 0;
-    }
-    .cta-buttons img {
-      height: 48px;
-      margin: 0.5rem;
-    }
-    .section {
-      padding: 3rem 2rem;
-      max-width: 800px;
-      margin: auto;
-      text-align: center;
-    }
-    .section h2 {
-      font-size: 1.8rem;
-    }
-    .section ul {
-      list-style: none;
-      padding: 0;
-    }
-    .section li {
-      margin: 1rem 0;
-    }
-    footer {
-      text-align: center;
-      font-size: 0.9rem;
-      padding: 2rem 1rem;
-      background-color: #e6f0ff;
-      color: #555;
-    }
-  </style>
+  <title>SideQuest</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header>
-    <h1>SideQuest</h1>
-    <p>Get hired. No resume required.</p>
-    <div class="cta-buttons">
-      <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store" />
-      <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" />
-    </div>
-  </header>
+  <div class="container">
+    <header>
+      <h1 class="title animate-fade">SideQuest</h1>
+      <p class="subtitle animate-fade-delayed">Start your next quest</p>
+      <div class="store-buttons animate-fade-delayed">
+        <img src="assets/apple.png" alt="Coming Soon to Apple Store">
+        <img src="assets/google.png" alt="Coming Soon to Android">
+      </div>
+      <a href="https://docs.google.com/forms/d/1uxIYStPmrDt9-YjYQqkUMkb6TY8RUiocXEUw3WE6r7U/viewform" class="form-button animate-fade-delayed" target="_blank">Join Waitlist</a>
+    </header>
 
-  <section class="section">
-    <h2>How it works</h2>
-    <ul>
-      <li>📱 Browse gigs in your area with a quick swipe</li>
-      <li>🎥 Apply instantly with a short profile and intro video</li>
-      <li>🏢 Businesses reach out directly—no resume, no hassle</li>
-    </ul>
-  </section>
+    <section class="how-it-works">
+      <h2>How it works</h2>
+      
+      <div class="section two-col">
+        <div class="text">
+          <h3>For Applicants</h3>
+          <ul>
+            <li>Create your profile — Add your interests, experience & intro video.</li>
+            <li>Browse local gigs — Swipe through short job cards.</li>
+            <li>Apply instantly — One swipe, no resume, no cover letter.</li>
+          </ul>
+    
+          <h3>For Businesses</h3>
+          <ul>
+            <li>List your opening</li>
+            <li>Review profiles</li>
+            <li>Hire</li>
+          </ul>
+        </div>
+        
+        <div class="visual">
+          <img src="assets/iphone_biz_profile.png" alt="Business Profile Screenshot" class="screenshot">
+        </div>
+      </div>
+    
+      <div class="section screenshot-row">
+        <img src="assets/listings.png" alt="Listings Screenshot" class="screenshot animate-zoom">
+        <img src="assets/role.png" alt="Roles Screenshot" class="screenshot animate-zoom">
+      </div>
+    </section>
 
-  <section class="section">
-    <h2>For Businesses</h2>
-    <p>Quickly find local talent that fits your vibe, not just your job description. SideQuest helps you connect with real people who want to work, fast.</p>
-  </section>
+    <section class="info">
+      <h3>✅ Mission</h3>
+      <p>Our mission at SideQuest is to make job hunting fast, human, and local. We believe in opportunity without barriers—connecting real people to businesses through simple, resume-free applications.</p>
 
-  <section class="section">
-    <h2>For Applicants</h2>
-    <p>Whether you're a student, a recent grad, or picking up side gigs—show who you are and get hired without writing a single resume.</p>
-  </section>
+      <h3>✅ About SideQuest</h3>
+      <p>SideQuest helps you land jobs without the headache. Whether you’re a student, new grad, or just looking for extra income, SideQuest lets you showcase your personality, skills, and interests through quick profiles and short intro videos. Employers skip the cover letters and get straight to what matters—the real you.</p>
+    </section>
 
-  <footer>
-    &copy; 2025 SideQuest Labs LLC · Made with hustle in California
-  </footer>
+    <footer>
+      <p>© 2025 SideQuest Labs LLC</p>
+      <p>SideQuest is a product of SideQuest Labs LLC. All rights reserved.</p>
+    </footer>
+  </div>
 </body>
 </html>
