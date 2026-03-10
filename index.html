@@ -3,71 +3,132 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SideQuest</title>
+  <title>SideQuest - Start Your Next Quest</title>
   <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1 class="title">SideQuest</h1>
-      <p class="subtitle">Start your next quest</p>
-      <div class="store-buttons fade-on-scroll">
-        <img src="assets/apple.png" alt="Coming Soon to Apple Store">
-        <img src="assets/google.png" alt="Coming Soon to Android">
-      </div>
-      <a href="https://docs.google.com/forms/d/1uxIYStPmrDt9-YjYQqkUMkb6TY8RUiocXEUw3WE6r7U/viewform" class="form-button pulse-button fade-on-scroll" target="_blank">Join Waitlist</a>
-    </header>
 
-    <section class="how-it-works">
-      <h2 class="fade-on-scroll">How it works</h2>
-      <div class="section two-col fade-on-scroll">
-        <div class="text">
-          <h3>For Applicants</h3>
-          <ul>
-            <li>Create your profile — Add your interests, experience & intro video.</li>
-            <li>Browse local gigs — Swipe through short job cards.</li>
-            <li>Apply instantly — One swipe, no resume, no cover letter.</li>
-          </ul>
+  <!-- NAV -->
+  <nav class="nav">
+    <img src="assets/logo.png" alt="SideQuest" class="nav-logo">
+    <a href="https://docs.google.com/forms/d/1uxIYStPmrDt9-YjYQqkUMkb6TY8RUiocXEUw3WE6r7U/viewform" class="nav-cta" target="_blank">Join Waitlist</a>
+  </nav>
 
-          <h3>For Businesses</h3>
-          <ul>
-            <li>List your opening</li>
-            <li>Review profiles</li>
-            <li>Hire</li>
-          </ul>
-        </div>
-        <div class="visual">
-          <img src="assets/iphone_biz_profile.png" alt="Business Profile Screenshot" class="screenshot floating">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content reveal">
+      <div class="badge">Coming Soon</div>
+      <h1>Work, found<br><span class="accent">differently.</span></h1>
+      <p class="hero-sub">No resume. No cover letter. Just swipe, connect, and get hired locally.</p>
+      <div class="hero-actions">
+        <a href="https://docs.google.com/forms/d/1uxIYStPmrDt9-YjYQqkUMkb6TY8RUiocXEUw3WE6r7U/viewform" class="btn-primary pulse-btn" target="_blank">Join the Waitlist</a>
+        <div class="store-pills">
+          <img src="assets/apple.png" alt="App Store">
         </div>
       </div>
-      <div class="section screenshot-row fade-on-scroll">
-        <img src="assets/listings.png" alt="Listings Screenshot" class="screenshot">
-        <img src="assets/role.png" alt="Roles Screenshot" class="screenshot">
+    </div>
+    <div class="hero-visual reveal">
+      <div class="phone-glow"></div>
+      <img src="assets/Feed.png" alt="SideQuest App Feed" class="hero-phone floating">
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section-container">
+    <div class="section-label reveal">How it works</div>
+    <h2 class="section-title reveal">Two sides.<br>One platform.</h2>
+
+    <div class="roles-grid">
+      <div class="role-card reveal">
+        <div class="role-icon applicant-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="8" r="4" fill="currentColor"/>
+            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>For Applicants</h3>
+        <ul>
+          <li>Build your profile with an intro video</li>
+          <li>Browse local gigs with a swipe</li>
+          <li>Apply instantly, no resume needed</li>
+          <li>Chat directly with employers</li>
+        </ul>
       </div>
-    </section>
+      <div class="role-card reveal">
+        <div class="role-icon biz-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="7" width="20" height="14" rx="2" stroke="currentColor" stroke-width="2"/>
+            <path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2" stroke="currentColor" stroke-width="2"/>
+            <line x1="12" y1="12" x2="12" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="10" y1="14" x2="14" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>For Businesses</h3>
+        <ul>
+          <li>Post your opening in minutes</li>
+          <li>Filter and review applicant profiles</li>
+          <li>Connect and hire efficiently</li>
+          <li>No back-and-forth paperwork</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-    <section class="info fade-on-scroll">
-      <h3>Mission</h3>
-      <p>At SideQuest, we’re simplifying the way people find work. We believe in local opportunities, real connections, and cutting out the noise — no resumes, no cover letters, just a faster, more human way to get hired.</p>
+  <!-- SCREENSHOTS -->
+  <section class="section-container screenshots-section">
+    <div class="section-label reveal">The experience</div>
+    <h2 class="section-title reveal">See it in action.</h2>
 
-      <h3>About SideQuest</h3>
-      <p>SideQuest is built for today’s job seekers. Whether you’re a student, recent grad, or looking for extra income, we make it easy to showcase your experience, personality, and interests through short profiles and intro videos. Businesses get to know the real you — quickly and easily.</p>
-    </section>
+    <div class="screenshots-showcase">
+      <div class="screenshot-item reveal">
+        <img src="assets/role-selection.png" alt="Choose your role" class="app-screenshot">
+        <div class="screenshot-caption">
+          <span class="caption-step">01</span>
+          <p>Choose your role as applicant or business</p>
+        </div>
+      </div>
+      <div class="screenshot-item reveal delay-1">
+        <img src="assets/difference.png" alt="Role differences explained" class="app-screenshot">
+        <div class="screenshot-caption">
+          <span class="caption-step">02</span>
+          <p>Understand how each role works in the app</p>
+        </div>
+      </div>
+      <div class="screenshot-item reveal delay-2">
+        <img src="assets/Feed.png" alt="Browse job feed" class="app-screenshot">
+        <div class="screenshot-caption">
+          <span class="caption-step">03</span>
+          <p>Swipe through local gigs and apply instantly</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <footer>
-      <p>© 2025 SideQuest Labs LLC</p>
-      <p>SideQuest is a product of SideQuest Labs LLC. All rights reserved.</p>
-    </footer>
-  </div>
+  <!-- MISSION -->
+  <section class="section-container mission-section reveal">
+    <div class="mission-card">
+      <div class="section-label">Our mission</div>
+      <h2>Built for the way<br>people actually work.</h2>
+      <p>We believe local opportunities deserve a better pipeline. SideQuest cuts out the noise. No resumes, no cover letters, just a faster, more human way to get hired and to hire.</p>
+      <a href="https://docs.google.com/forms/d/1uxIYStPmrDt9-YjYQqkUMkb6TY8RUiocXEUw3WE6r7U/viewform" class="btn-primary" target="_blank">Get Early Access</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <img src="assets/logo.png" alt="SideQuest" class="footer-logo">
+    <p>© 2025 SideQuest Labs LLC. All rights reserved.</p>
+  </footer>
 
   <script>
+    document.documentElement.classList.add('js');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) entry.target.classList.add('visible');
       });
-    });
-    document.querySelectorAll('.fade-on-scroll').forEach(el => observer.observe(el));
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   </script>
 </body>
 </html>
