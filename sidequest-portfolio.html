@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SideQuest - Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --accent: #60CD8B;
+      --accent-light: #60CD8B22;
+      --bg: #0d0d0d;
+      --surface: #1a1a1a;
+      --border: #2a2a2a;
+      --text: #f0f0f0;
+      --muted: #888;
+      --radius: 14px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #000;
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Page container - A4 proportions ── */
+    .page {
+      width: 794px;
+      min-height: 1123px;
+      background: var(--bg);
+      margin: 40px auto;
+      padding: 52px 52px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+      box-shadow: 0 4px 40px rgba(0,0,0,0.12);
+    }
+
+    /* ── Header ── */
+    .header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .app-name {
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--text);
+    }
+
+    .app-name span {
+      color: var(--accent);
+    }
+
+    .tagline {
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .header-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+
+    .role-badge {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .header-right p {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* ── Sections ── */
+    .sections {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      flex: 1;
+    }
+
+    .section {
+      display: grid;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .section.layout-full {
+      grid-template-columns: 1fr 200px;
+    }
+
+    .section.layout-split {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .section.layout-chat {
+      grid-template-columns: 200px 1fr;
+    }
+
+    .section-text {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .section-number {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: var(--text);
+    }
+
+    .section-desc {
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--muted);
+      max-width: 340px;
+    }
+
+    /* ── Screenshots ── */
+    .screenshot {
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface);
+    }
+
+    .screenshot.tall  { height: 340px; }
+    .screenshot.medium { height: 260px; }
+    .screenshot.short  { height: 220px; }
+
+    .screenshot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+    }
+
+    /* Two-up layout for section 2 */
+    .two-up {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .two-up-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── Under the Hood ── */
+    .hood {
+      padding-top: 4px;
+    }
+
+    .hood-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 28px;
+      margin-top: 2px;
+    }
+
+    .hood-item {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .hood-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .hood-desc {
+      font-size: 11px;
+      line-height: 1.55;
+      color: var(--muted);
+    }
+
+    /* ── Tech stack footer ── */
+    .stack {
+      padding-top: 4px;
+    }
+
+    .stack-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .stack-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .chip {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    /* ── Print ── */
+    @media print {
+      body { background: #000; }
+      .page {
+        margin: 0;
+        box-shadow: none;
+        width: 100%;
+        padding: 36px 44px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="header-left">
+        <div class="app-name">Side<span>Quest</span></div>
+        <div class="tagline">iOS Job Marketplace - Full-Stack Solo Project</div>
+      </div>
+      <div class="header-right">
+        <div class="role-badge">iOS + Backend</div>
+        <p>sidequestapp.io</p>
+        <p>rosendoinzunza@gmail.com</p>
+        <p>Beta Launch - May 2026</p>
+      </div>
+    </div>
+
+    <div class="sections">
+
+      <!-- Section 1: Discover Jobs -->
+      <div class="section layout-full">
+        <div class="section-text">
+          <div class="section-number">01 - Discover Jobs</div>
+          <div class="section-title">Swipe to Apply</div>
+          <div class="section-desc">
+            Applicants browse job listings through a swipeable card deck.
+            Swipe right to apply, left to pass - a familiar, low-friction
+            interaction that makes job hunting feel less like work.
+          </div>
+        </div>
+        <div class="screenshot tall">
+          <img src="screenshots/Applicant_feed_view.png" alt="Applicant feed view" />
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Section 2: Two-Sided Marketplace -->
+      <div class="section-text">
+        <div class="section-number">02 - Two-Sided Marketplace</div>
+        <div class="section-title">Built for Both Sides</div>
+        <div class="section-desc">
+          Businesses post listings and move applicants through a hiring pipeline
+          (Interested → Hired). Applicants track every application in one place,
+          with active and archived views.
+        </div>
+      </div>
+      <div class="two-up">
+        <div>
+          <div class="two-up-label">Business - Listings</div>
+          <div class="screenshot medium">
+            <img src="screenshots/biz_listings.view.png" alt="Business listings view" />
+          </div>
+        </div>
+        <div>
+          <div class="two-up-label">Applicant - Quests</div>
+          <div class="screenshot medium">
+            <img src="screenshots/applicant_quests_view.png" alt="Applicant quests view" />
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Section 3: Messaging -->
+      <div class="section layout-chat">
+        <div class="screenshot short">
+          <img src="screenshots/conversation_view.png" alt="Conversation view" />
+        </div>
+        <div class="section-text">
+          <div class="section-number">03 - Real-Time Messaging</div>
+          <div class="section-title">Chat When It Clicks</div>
+          <div class="section-desc">
+            In-app messaging connects businesses and applicants the moment
+            there's mutual interest. Live updates via WebSocket, typing
+            indicators, read receipts, and push notifications keep
+            conversations moving.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Under the Hood -->
+    <div class="divider"></div>
+    <div class="hood">
+      <div class="stack-label">Under the Hood</div>
+      <div class="hood-grid">
+        <div class="hood-item">
+          <div class="hood-title">JWT + Refresh Token Rotation</div>
+          <div class="hood-desc">Short-lived access tokens with silent refresh - users stay logged in without re-authenticating.</div>
+        </div>
+        <div class="hood-item">
+          <div class="hood-title">Apple &amp; Google SSO</div>
+          <div class="hood-desc">Native OAuth flows on iOS alongside email/password auth, all sharing the same session pipeline.</div>
+        </div>
+        <div class="hood-item">
+          <div class="hood-title">WebSocket Messaging</div>
+          <div class="hood-desc">Live chat with a polling fallback - messages arrive instantly without requiring a page refresh.</div>
+        </div>
+        <div class="hood-item">
+          <div class="hood-title">Per-Route Rate Limiting</div>
+          <div class="hood-desc">Sliding window limiter keyed by IP, with separate thresholds for auth vs. registration routes.</div>
+        </div>
+        <div class="hood-item">
+          <div class="hood-title">Stripe + RevenueCat</div>
+          <div class="hood-desc">Stripe for business subscriptions, RevenueCat for applicant in-app purchases - two billing surfaces, one codebase.</div>
+        </div>
+        <div class="hood-item">
+          <div class="hood-title">AWS S3 Media Uploads</div>
+          <div class="hood-desc">Profile photos and video intros upload directly to S3, keeping the API server stateless.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tech Stack -->
+    <div class="divider"></div>
+    <div class="stack">
+      <div class="stack-label">Built with</div>
+      <div class="stack-chips">
+        <span class="chip">SwiftUI (MVVM)</span>
+        <span class="chip">Rust / Axum</span>
+        <span class="chip">PostgreSQL</span>
+        <span class="chip">JWT Auth</span>
+        <span class="chip">Stripe</span>
+        <span class="chip">RevenueCat</span>
+        <span class="chip">WebSockets</span>
+        <span class="chip">Push Notifications</span>
+        <span class="chip">AWS S3</span>
+        <span class="chip">TestFlight</span>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
