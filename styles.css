@@ -447,6 +447,16 @@ body::before {
   color: var(--text-muted);
 }
 
+.footer p a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer p a:hover {
+  color: var(--green);
+}
+
 /* =========================================
    ANIMATIONS
    ========================================= */
