@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support - SideQuest</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .legal-container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 120px 24px 80px;
+    }
+    .legal-container h1 {
+      font-size: 2.4rem;
+      color: var(--text);
+      margin-bottom: 8px;
+      letter-spacing: -0.03em;
+    }
+    .legal-lead {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 32px;
+      display: block;
+    }
+    .legal-container h2 {
+      font-size: 1.25rem;
+      color: var(--green);
+      margin-top: 36px;
+      margin-bottom: 12px;
+    }
+    .legal-container h3 {
+      font-size: 1.05rem;
+      color: var(--text);
+      margin-top: 20px;
+      margin-bottom: 8px;
+    }
+    .legal-container p,
+    .legal-container li {
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-bottom: 12px;
+    }
+    .legal-container ul {
+      padding-left: 20px;
+      margin-bottom: 12px;
+    }
+    .legal-container a {
+      color: var(--green);
+      text-decoration: none;
+    }
+    .legal-container a:hover {
+      text-decoration: underline;
+    }
+    .legal-back {
+      display: inline-block;
+      margin-bottom: 32px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .legal-back:hover {
+      color: var(--green);
+    }
+
+    /* Support-specific */
+    .contact-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin: 24px 0 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .contact-card .contact-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .contact-card .contact-email {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+    .contact-card .contact-email:hover {
+      color: var(--green);
+      text-decoration: none;
+    }
+    .contact-card .contact-meta {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .faq-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 20px 22px;
+      margin-bottom: 12px;
+      transition: border-color 0.2s ease;
+    }
+    .faq-item:hover {
+      border-color: rgba(34,197,94,0.3);
+    }
+    .faq-item summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text);
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after {
+      content: '+';
+      color: var(--green);
+      font-size: 1.4rem;
+      font-weight: 400;
+      transition: transform 0.2s ease;
+      line-height: 1;
+    }
+    .faq-item[open] summary::after {
+      transform: rotate(45deg);
+    }
+    .faq-item p {
+      margin-top: 12px;
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="/"><img src="assets/logo.png" alt="SideQuest" class="nav-logo"></a>
+    <a href="mailto:dev@sidequestapp.io" class="nav-cta">Contact Support</a>
+  </nav>
+
+  <div class="legal-container">
+    <a href="/" class="legal-back">&larr; Back to Home</a>
+    <h1>Support</h1>
+    <span class="legal-lead">Need a hand with SideQuest? We're here to help. Reach out anytime and we'll get back to you as soon as we can.</span>
+
+    <div class="contact-card">
+      <span class="contact-label">Email Support</span>
+      <a href="mailto:dev@sidequestapp.io" class="contact-email">dev@sidequestapp.io</a>
+      <p class="contact-meta">We typically respond within 1&ndash;2 business days.</p>
+    </div>
+
+    <h2>What to include in your message</h2>
+    <p>To help us resolve your issue quickly, please include:</p>
+    <ul>
+      <li>A short description of the problem or question</li>
+      <li>Your account email (if different from the one you're writing from)</li>
+      <li>Your device model and iOS version</li>
+      <li>The app version (found in <em>Settings &rarr; About</em>)</li>
+      <li>Screenshots or a screen recording, if applicable</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+
+    <details class="faq-item">
+      <summary>How do I create an account?</summary>
+      <p>Open the app, tap <strong>Sign Up</strong>, and choose to continue with email, Google, or Apple. You'll then pick a role (applicant or business) and complete a short profile.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How do I switch between applicant and business roles?</summary>
+      <p>Roles are tied to your profile. To change roles, head to <strong>Settings &rarr; Account</strong>, or contact support if you need help moving an existing account.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How do I reset my password?</summary>
+      <p>On the sign-in screen, tap <strong>Forgot Password</strong> and enter your account email. We'll send a reset link. If you don't see it within a few minutes, check your spam folder.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How do I delete my account?</summary>
+      <p>Go to <strong>Settings &rarr; Account &rarr; Delete Account</strong> in the app. Your personal data will be deleted or anonymized within 30 days, as described in our <a href="/privacy">Privacy Policy</a>.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How do I report a bug or inappropriate content?</summary>
+      <p>You can flag a listing or user directly from their profile by tapping the <strong>Report</strong> option. For bugs, email us at <a href="mailto:dev@sidequestapp.io">dev@sidequestapp.io</a> with details and a screenshot if possible.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is SideQuest free to use?</summary>
+      <p>Yes. SideQuest is free for both applicants and businesses to use. Some optional features may be added over time, but the core experience will remain free.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Why don't I see jobs in my area?</summary>
+      <p>SideQuest is currently rolling out city by city. If your area is light on listings, your account is still active and ready to go as soon as more local businesses join. Make sure your city and state are set correctly in your profile.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How does messaging work?</summary>
+      <p>Once you apply to a gig (or an applicant applies to your listing), a chat thread opens automatically. You'll get a notification when there's a new message.</p>
+    </details>
+
+    <h2>Other Resources</h2>
+    <ul>
+      <li><a href="/privacy">Privacy Policy</a></li>
+      <li><a href="/terms">Terms of Service</a></li>
+    </ul>
+
+    <h2>Contact</h2>
+    <p>
+      Email: <a href="mailto:dev@sidequestapp.io">dev@sidequestapp.io</a><br>
+      SideQuest Labs LLC
+    </p>
+  </div>
+
+  <footer class="footer">
+    <img src="assets/logo.png" alt="SideQuest" class="footer-logo">
+    <p>&copy; 2025 SideQuest Labs LLC &middot; <a href="/privacy">Privacy Policy</a> &middot; <a href="/terms">Terms of Service</a> &middot; <a href="/support">Support</a></p>
+  </footer>
+
+</body>
+</html>
