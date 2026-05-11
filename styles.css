@@ -181,8 +181,14 @@ body::before {
 
 .store-pills {
   display: flex;
-  gap: 12px;
+  gap: 16px;
   align-items: center;
+}
+
+.android-coming {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-weight: 500;
 }
 
 .store-pills img {
