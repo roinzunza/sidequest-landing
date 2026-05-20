@@ -120,8 +120,17 @@ body::before {
     0 4px 14px rgba(0,0,0,0.35);
 }
 
+.nav-cta-secondary .nav-cta-short { display: none; }
+
 @media (max-width: 540px) {
-  .nav-cta-secondary { display: none; }
+  .nav-actions { gap: 6px; }
+  .nav-cta,
+  .nav-cta-secondary {
+    padding: 8px 14px;
+    font-size: 0.8rem;
+  }
+  .nav-cta-secondary .nav-cta-full { display: none; }
+  .nav-cta-secondary .nav-cta-short { display: inline; }
 }
 
 /* =========================================

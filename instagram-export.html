@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instagram Ad Export - SideQuest</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #22c55e;
+      --green-dim: rgba(34, 197, 94, 0.12);
+      --green-glow: rgba(34, 197, 94, 0.3);
+      --bg: #0b0b0f;
+      --surface: #13131a;
+      --surface-2: #1c1c26;
+      --border: rgba(255,255,255,0.08);
+      --text: #f0f0f5;
+      --text-muted: rgba(240,240,245,0.55);
+    }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: #1a1a1f;
+      color: var(--text);
+      padding: 60px 40px;
+    }
+
+    /* ===== Instructions panel ===== */
+    .instructions {
+      max-width: 1080px;
+      margin: 0 auto 60px;
+      padding: 36px 40px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      line-height: 1.7;
+    }
+    .instructions h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+    .instructions h1 .pill {
+      display: inline-block;
+      background: var(--green-dim);
+      color: var(--green);
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 100px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+    .instructions p, .instructions li {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+    .instructions ol {
+      margin: 12px 0 0 24px;
+    }
+    .instructions ol li { margin-bottom: 6px; }
+    .instructions code {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-family: 'Menlo', monospace;
+      font-size: 0.85rem;
+      color: var(--green);
+    }
+    .instructions .tip {
+      margin-top: 20px;
+      padding: 14px 18px;
+      background: rgba(34,197,94,0.06);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 10px;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+    .instructions .tip strong { color: var(--green); }
+
+    /* ===== Section headers ===== */
+    .section-header {
+      max-width: 1080px;
+      margin: 80px auto 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .section-header h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .section-header .dim {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-family: 'Menlo', monospace;
+    }
+
+    /* ===== Download buttons ===== */
+    .download-btn {
+      background: var(--green);
+      color: #000;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 10px 22px;
+      border-radius: 100px;
+      border: none;
+      cursor: pointer;
+      letter-spacing: -0.01em;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    .download-btn:hover:not(:disabled) {
+      opacity: 0.9;
+      transform: scale(1.03);
+    }
+    .download-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .download-btn.secondary {
+      background: var(--surface-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      font-size: 0.82rem;
+      padding: 8px 16px;
+    }
+
+    .card-meta {
+      width: 1080px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .progress-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(11,11,15,0.92);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .progress-overlay.active { display: flex; }
+    .progress-overlay .progress-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 48px;
+      text-align: center;
+    }
+    .progress-overlay h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .progress-overlay p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+    .progress-overlay .green { color: var(--green); font-weight: 700; }
+
+    /* ===== Card grid ===== */
+    .card-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 60px;
+      align-items: center;
+    }
+    .card-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .card-wrap .card-id {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-family: 'Menlo', monospace;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .card-wrap .card-id .green { color: var(--green); }
+
+    /* =====================================
+       FEED CARD (1080 x 1350)
+       ===================================== */
+    .ig-feed-card {
+      width: 1080px;
+      height: 1350px;
+      padding: 96px 80px;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      border-radius: 0;
+    }
+    .ig-feed-card::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1100px;
+      height: 700px;
+      background: radial-gradient(ellipse, rgba(34,197,94,0.14) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .ig-feed-card .ig-content { position: relative; z-index: 1; }
+    .ig-feed-card .ig-top {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 80px;
+    }
+    .ig-feed-card .ig-logo {
+      height: 44px;
+      filter: invert(1);
+      opacity: 0.95;
+    }
+    .ig-feed-card .ig-label {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 32px;
+    }
+    .ig-feed-card .ig-headline {
+      font-size: 108px;
+      font-weight: 700;
+      line-height: 0.96;
+      letter-spacing: -0.045em;
+      color: var(--text);
+    }
+    .ig-feed-card .ig-headline .accent { color: var(--green); }
+    .ig-feed-card .ig-sub {
+      font-size: 32px;
+      line-height: 1.4;
+      color: var(--text-muted);
+      margin-top: 40px;
+      max-width: 880px;
+    }
+    .ig-feed-card .ig-pills {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-top: 48px;
+    }
+    .ig-feed-card .ig-pill {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 100px;
+      padding: 22px 32px;
+      font-size: 26px;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .ig-feed-card .ig-pill::before {
+      content: '';
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 14px rgba(34,197,94,0.6);
+    }
+    .ig-feed-card .ig-stat-list {
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .ig-feed-card .ig-stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 16px 0;
+      font-size: 28px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .ig-feed-card .ig-stat-row:last-child { border-bottom: none; }
+    .ig-feed-card .ig-stat-row .platform {
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .ig-feed-card .ig-stat-row .price {
+      color: var(--text);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+    .ig-feed-card .ig-stat-row.us {
+      border-top: 1px solid rgba(34,197,94,0.3);
+      margin-top: 8px;
+      padding-top: 20px;
+    }
+    .ig-feed-card .ig-stat-row.us .platform,
+    .ig-feed-card .ig-stat-row.us .price {
+      color: var(--green);
+      font-weight: 700;
+    }
+    .ig-feed-card .ig-cta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      position: relative;
+      z-index: 1;
+      margin-top: 60px;
+    }
+    .ig-feed-card .ig-cta .apple-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: #000;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 16px;
+      padding: 14px 22px;
+    }
+    .ig-feed-card .ig-cta .apple-badge svg {
+      width: 36px;
+      height: 36px;
+      color: #fff;
+    }
+    .ig-feed-card .ig-cta .apple-badge .badge-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+    }
+    .ig-feed-card .ig-cta .apple-badge .badge-text small {
+      font-size: 12px;
+      color: rgba(255,255,255,0.65);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+    .ig-feed-card .ig-cta .apple-badge .badge-text strong {
+      font-size: 22px;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: -0.01em;
+    }
+    .ig-feed-card .ig-cta .handle {
+      font-size: 22px;
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+    }
+    .ig-feed-card .ig-cta .handle strong {
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    /* =====================================
+       STORY CARD (1080 x 1920)
+       ===================================== */
+    .ig-story-card {
+      width: 1080px;
+      height: 1920px;
+      padding: 260px 80px 280px; /* top + bottom safe zones */
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+    .ig-story-card::before {
+      content: '';
+      position: absolute;
+      top: 200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1200px;
+      height: 1000px;
+      background: radial-gradient(ellipse, rgba(34,197,94,0.16) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .ig-story-card .ig-content { position: relative; z-index: 1; }
+    .ig-story-card .ig-top {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 90px;
+    }
+    .ig-story-card .ig-logo {
+      height: 56px;
+      filter: invert(1);
+      opacity: 0.95;
+    }
+    .ig-story-card .ig-label {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 40px;
+    }
+    .ig-story-card .ig-headline {
+      font-size: 130px;
+      font-weight: 700;
+      line-height: 0.96;
+      letter-spacing: -0.045em;
+    }
+    .ig-story-card .ig-headline .accent { color: var(--green); }
+    .ig-story-card .ig-sub {
+      font-size: 38px;
+      line-height: 1.4;
+      color: var(--text-muted);
+      margin-top: 48px;
+    }
+    .ig-story-card .ig-pills {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      margin-top: 56px;
+    }
+    .ig-story-card .ig-pill {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 120px;
+      padding: 26px 38px;
+      font-size: 30px;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .ig-story-card .ig-pill::before {
+      content: '';
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 18px rgba(34,197,94,0.6);
+    }
+    .ig-story-card .ig-stat-list {
+      margin-top: 48px;
+      padding-top: 36px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .ig-story-card .ig-stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 20px 0;
+      font-size: 32px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .ig-story-card .ig-stat-row:last-child { border-bottom: none; }
+    .ig-story-card .ig-stat-row .platform {
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .ig-story-card .ig-stat-row .price {
+      color: var(--text);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+    .ig-story-card .ig-stat-row.us {
+      border-top: 1px solid rgba(34,197,94,0.3);
+      margin-top: 10px;
+      padding-top: 24px;
+    }
+    .ig-story-card .ig-stat-row.us .platform,
+    .ig-story-card .ig-stat-row.us .price {
+      color: var(--green);
+      font-weight: 700;
+    }
+    .ig-story-card .ig-cta {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .ig-story-card .ig-cta .apple-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      background: #fff;
+      border-radius: 18px;
+      padding: 16px 26px;
+    }
+    .ig-story-card .ig-cta .apple-badge svg {
+      width: 42px;
+      height: 42px;
+      color: #000;
+    }
+    .ig-story-card .ig-cta .apple-badge .badge-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+    }
+    .ig-story-card .ig-cta .apple-badge .badge-text small {
+      font-size: 14px;
+      color: rgba(0,0,0,0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 5px;
+    }
+    .ig-story-card .ig-cta .apple-badge .badge-text strong {
+      font-size: 26px;
+      font-weight: 700;
+      color: #000;
+      letter-spacing: -0.01em;
+    }
+    .ig-story-card .ig-cta .handle {
+      font-size: 26px;
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+    }
+    .ig-story-card .ig-cta .handle strong {
+      color: var(--green);
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- INSTRUCTIONS -->
+  <div class="instructions">
+    <h1>Instagram Ad Export <span class="pill">Click to download</span></h1>
+    <p>10 ad-ready cards below &mdash; 5 Feed (1080&times;1350) and 5 Story (1080&times;1920). Hit the green button next to any card to download it as a PNG, or use the "Download all" buttons to grab them in bulk.</p>
+    <div class="tip">
+      <strong>Output:</strong> Each PNG renders at 2x resolution (2160&times;2700 feed, 2160&times;3840 story) for retina-crisp ads. Meta Ads Manager downscales these cleanly &mdash; no blur, no quality loss. Upload directly into your campaign.
+    </div>
+    <div style="display:flex; gap:12px; margin-top:20px;">
+      <button class="download-btn" id="downloadAllFeed">Download all Feed (5)</button>
+      <button class="download-btn" id="downloadAllStory">Download all Story (5)</button>
+      <button class="download-btn secondary" id="downloadEverything">Download everything (10)</button>
+    </div>
+  </div>
+
+  <!-- Progress overlay -->
+  <div class="progress-overlay" id="progressOverlay">
+    <div class="progress-box">
+      <h3>Capturing <span class="green" id="progressCurrent">0</span> of <span id="progressTotal">0</span></h3>
+      <p id="progressLabel">Starting&hellip;</p>
+    </div>
+  </div>
+
+  <!-- ============================================
+       FEED CARDS — 1080 × 1350
+       ============================================ -->
+  <div class="section-header">
+    <h2>Feed (1080 &times; 1350)</h2>
+    <span class="dim">Right-click each &lt;article&gt; &rarr; Capture node screenshot</span>
+  </div>
+
+  <div class="card-stack">
+
+    <!-- Feed Card 1 -->
+    <div class="card-wrap">
+      <div class="card-meta">
+        <span class="card-id"><span class="green">feed-1</span> &middot; more than a r&eacute;sum&eacute;</span>
+        <button class="download-btn" data-card="feed-1">Download PNG</button>
+      </div>
+      <article class="ig-feed-card" id="feed-1">
+        <div class="ig-content">
+          <div class="ig-top">
+            <img src="assets/logo.png" alt="SideQuest" class="ig-logo">
+          </div>
+          <div class="ig-label">For local hiring</div>
+          <h1 class="ig-headline">More than<br>a <span class="accent">r&eacute;sum&eacute;.</span></h1>
+          <p class="ig-sub">Video intros, photos, and work history come first. R&eacute;sum&eacute;s, certs, and licenses ride along when the job calls for them.</p>
+        </div>
+        <div class="ig-cta">
+          <div class="apple-badge">
+            <svg viewBox="0 0 384 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+            </svg>
+            <div class="badge-text">
+              <small>Download on the</small>
+              <strong>App Store</strong>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- Feed Card 2 -->
+    <div class="card-wrap">
+      <div class="card-meta">
+        <span class="card-id"><span class="green">feed-2</span> &middot; hiring finally simple</span>
+        <button class="download-btn" data-card="feed-2">Download PNG</button>
+      </div>
+      <article class="ig-feed-card" id="feed-2">
+        <div class="ig-content">
+          <div class="ig-top">
+            <img src="assets/logo.png" alt="SideQuest" class="ig-logo">
+          </div>
+          <div class="ig-label">Why SideQuest</div>
+          <h1 class="ig-headline">Hiring,<br><span class="accent">finally simple.</span></h1>
+          <div class="ig-pills">
+            <span class="ig-pill">See a face and a video before they walk in</span>
+            <span class="ig-pill">All your applicants in one place</span>
+            <span class="ig-pill">Cheaper than the competition</span>
+            <span class="ig-pill">Direct messaging, no email chains</span>
+          </div>
+        </div>
+        <div class="ig-cta">
+          <div class="apple-badge">
+            <svg viewBox="0 0 384 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+            </svg>
+            <div class="badge-text">
+              <small>Download on the</small>
+              <strong>App Store</strong>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- Feed Card 3 -->
+    <div class="card-wrap">
+      <div class="card-meta">
+        <span class="card-id"><span class="green">feed-3</span> &middot; post in seconds</span>
+        <button class="download-btn" data-card="feed-3">Download PNG</button>
+      </div>
+      <article class="ig-feed-card" id="feed-3">
+        <div class="ig-content">
+          <div class="ig-top">
+            <img src="assets/logo.png" alt="SideQuest" class="ig-logo">
+          </div>
+          <div class="ig-label">Built for speed</div>
+          <h1 class="ig-headline">Post a job<br>in <span class="accent">seconds.</span></h1>
+          <p class="ig-sub">First listing's free. Upgrade when you need more. No setup, no integrations, no sales calls.</p>
+        </div>
+        <div class="ig-cta">
+          <div class="apple-badge">
+            <svg viewBox="0 0 384 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+            </svg>
+            <div class="badge-text">
+              <small>Download on the</small>
+              <strong>App Store</strong>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- Feed Card 4 -->
+    <div class="card-wrap">
+      <div class="card-meta">
+        <span class="card-id"><span class="green">feed-4</span> &middot; price comparison</span>
+        <button class="download-btn" data-card="feed-4">Download PNG</button>
+      </div>
+      <article class="ig-feed-card" id="feed-4">
+        <div class="ig-content">
+          <div class="ig-top">
+            <img src="assets/logo.png" alt="SideQuest" class="ig-logo">
+          </div>
+          <div class="ig-label">The math</div>
+          <h1 class="ig-headline"><span class="accent">5 listings</span><br>for $24.99/mo.</h1>
+          <div class="ig-stat-list">
+            <div class="ig-stat-row"><span class="platform">Snagajob</span><span class="price">$89 / mo</span></div>
+            <div class="ig-stat-row"><span class="platform">ZipRecruiter</span><span class="price">$399+ / mo</span></div>
+            <div class="ig-stat-row"><span class="platform">Indeed</span><span class="price">$120+ / mo</span></div>
+            <div class="ig-stat-row"><span class="platform">OfferUp Jobs</span><span class="price">$25 / post</span></div>
+            <div class="ig-stat-row us"><span class="platform">SideQuest &middot; 5 listings</span><span class="price">$24.99 / mo</span></div>
+          </div>
+        </div>
+        <div class="ig-cta">
+          <div class="apple-badge">
+            <svg viewBox="0 0 384 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+            </svg>
+            <div class="badge-text">
+              <small>Download on the</small>
+              <strong>App Store</strong>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- Feed Card 5 -->
+    <div class="card-wrap">
+      <div class="card-meta">
+        <span class="card-id"><span class="green">feed-5</span> &middot; applicants</span>
+        <button class="download-btn" data-card="feed-5">Download PNG</button>
+      </div>
+      <article class="ig-feed-card" id="feed-5">
+        <div class="ig-content">
+          <div class="ig-top">
+            <img src="assets/logo.png" alt="SideQuest" class="ig-logo">
+          </div>
+          <div class="ig-label">For applicants</div>
+          <h1 class="ig-headline">Apply with<br>your <span class="accent">face,</span><br>not a PDF.</h1>
+          <p class="ig-sub">Add a video, photos, and work history. Throw in a r&eacute;sum&eacute; or cert if it helps. Local jobs, in a tap &mdash; always free.</p>
+        </div>
+        <div class="ig-cta">
+          <div class="apple-badge">
+            <svg viewBox="0 0 384 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+            </svg>
+            <div class="badge-text">
+              <small>Download on the</small>
+              <strong>App Store</strong>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+  </div>
+
+  <!-- ============================================
+       STORY CARDS — 1080 × 1920
+       ============================================ -->
+  <div class="section-header">
+    <h2>Story / Reel (1080 &times; 1920)</h2>
+    <span class="dim">Top/bottom 250px reserved for IG UI</span>
+  </div>
+
+  <div class="card-stack">
+
+    <!-- Story Card 1 -->
+    <div class="card-wrap">
+      <div class="card-meta">
+        <span class="card-id"><span class="green">story-1</span> &middot; more than a r&eacute;sum&eacute;</span>
+        <button class="download-btn" data-card="story-1">Download PNG</button>
+      </div>
+      <article class="ig-story-card" id="story-1">
+        <div class="ig-content">
+          <div class="ig-top">
+            <img src="assets/logo.png" alt="SideQuest" class="ig-logo">
+          </div>
+          <div class="ig-label">For local hiring</div>
+          <h1 class="ig-headline">More than<br>a <span class="accent">r&eacute;sum&eacute;.</span></h1>
+          <p class="ig-sub">Video intros, photos, and work history come first. R&eacute;sum&eacute;s, certs, and licenses ride along when the job needs them.</p>
+        </div>
+        <div class="ig-cta">
+          <div class="apple-badge">
+            <svg viewBox="0 0 384 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+            </svg>
+            <div class="badge-text">
+              <small>Download on the</small>
+              <strong>App Store</strong>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- Story Card 2 -->
+    <div class="card-wrap">
+      <div class="card-meta">
+        <span class="card-id"><span class="green">story-2</span> &middot; hiring finally simple</span>
+        <button class="download-btn" data-card="story-2">Download PNG</button>
+      </div>
+      <article class="ig-story-card" id="story-2">
+        <div class="ig-content">
+          <div class="ig-top">
+            <img src="assets/logo.png" alt="SideQuest" class="ig-logo">
+          </div>
+          <div class="ig-label">Why SideQuest</div>
+          <h1 class="ig-headline">Hiring,<br><span class="accent">finally simple.</span></h1>
+          <div class="ig-pills">
+            <span class="ig-pill">See a face and a video before they walk in</span>
+            <span class="ig-pill">All your applicants in one place</span>
+            <span class="ig-pill">Cheaper than the competition</span>
+            <span class="ig-pill">Direct messaging, no email chains</span>
+            <span class="ig-pill">Cancel anytime</span>
+          </div>
+        </div>
+        <div class="ig-cta">
+          <div class="apple-badge">
+            <svg viewBox="0 0 384 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+            </svg>
+            <div class="badge-text">
+              <small>Download on the</small>
+              <strong>App Store</strong>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- Story Card 3 -->
+    <div class="card-wrap">
+      <div class="card-meta">
+        <span class="card-id"><span class="green">story-3</span> &middot; post in seconds</span>
+        <button class="download-btn" data-card="story-3">Download PNG</button>
+      </div>
+      <article class="ig-story-card" id="story-3">
+        <div class="ig-content">
+          <div class="ig-top">
+            <img src="assets/logo.png" alt="SideQuest" class="ig-logo">
+          </div>
+          <div class="ig-label">Built for speed</div>
+          <h1 class="ig-headline">Post a job<br>in <span class="accent">seconds.</span></h1>
+          <p class="ig-sub">First listing's free. Upgrade when you need more. No setup, no integrations, no sales calls.</p>
+        </div>
+        <div class="ig-cta">
+          <div class="apple-badge">
+            <svg viewBox="0 0 384 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8 -74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+            </svg>
+            <div class="badge-text">
+              <small>Download on the</small>
+              <strong>App Store</strong>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- Story Card 4 -->
+    <div class="card-wrap">
+      <div class="card-meta">
+        <span class="card-id"><span class="green">story-4</span> &middot; price comparison</span>
+        <button class="download-btn" data-card="story-4">Download PNG</button>
+      </div>
+      <article class="ig-story-card" id="story-4">
+        <div class="ig-content">
+          <div class="ig-top">
+            <img src="assets/logo.png" alt="SideQuest" class="ig-logo">
+          </div>
+          <div class="ig-label">The math</div>
+          <h1 class="ig-headline"><span class="accent">5 listings</span><br>for $24.99/mo.</h1>
+          <div class="ig-stat-list">
+            <div class="ig-stat-row"><span class="platform">Snagajob</span><span class="price">$89 / mo</span></div>
+            <div class="ig-stat-row"><span class="platform">ZipRecruiter</span><span class="price">$399+ / mo</span></div>
+            <div class="ig-stat-row"><span class="platform">Indeed</span><span class="price">$120+ / mo</span></div>
+            <div class="ig-stat-row"><span class="platform">OfferUp Jobs</span><span class="price">$25 / post</span></div>
+            <div class="ig-stat-row us"><span class="platform">SideQuest &middot; 5 listings</span><span class="price">$24.99 / mo</span></div>
+          </div>
+        </div>
+        <div class="ig-cta">
+          <div class="apple-badge">
+            <svg viewBox="0 0 384 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+            </svg>
+            <div class="badge-text">
+              <small>Download on the</small>
+              <strong>App Store</strong>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- Story Card 5 -->
+    <div class="card-wrap">
+      <div class="card-meta">
+        <span class="card-id"><span class="green">story-5</span> &middot; applicants</span>
+        <button class="download-btn" data-card="story-5">Download PNG</button>
+      </div>
+      <article class="ig-story-card" id="story-5">
+        <div class="ig-content">
+          <div class="ig-top">
+            <img src="assets/logo.png" alt="SideQuest" class="ig-logo">
+          </div>
+          <div class="ig-label">For applicants</div>
+          <h1 class="ig-headline">Apply with<br>your <span class="accent">face,</span><br>not a PDF.</h1>
+          <p class="ig-sub">Add a video, photos, and work history. Throw in a r&eacute;sum&eacute; or cert if it helps. Apply to local jobs in a tap &mdash; always free.</p>
+        </div>
+        <div class="ig-cta">
+          <div class="apple-badge">
+            <svg viewBox="0 0 384 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+            </svg>
+            <div class="badge-text">
+              <small>Download on the</small>
+              <strong>App Store</strong>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script>
+    const overlay = document.getElementById('progressOverlay');
+    const progressCurrent = document.getElementById('progressCurrent');
+    const progressTotal = document.getElementById('progressTotal');
+    const progressLabel = document.getElementById('progressLabel');
+
+    async function captureCard(cardId, scale = 2) {
+      const el = document.getElementById(cardId);
+      if (!el) throw new Error(`Card ${cardId} not found`);
+
+      const canvas = await html2canvas(el, {
+        scale,
+        backgroundColor: null,
+        useCORS: true,
+        allowTaint: false,
+        logging: false,
+        windowWidth: el.scrollWidth,
+        windowHeight: el.scrollHeight,
+      });
+
+      return new Promise((resolve) => {
+        canvas.toBlob((blob) => {
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `sidequest-${cardId}.png`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          setTimeout(() => URL.revokeObjectURL(url), 1000);
+          resolve();
+        }, 'image/png');
+      });
+    }
+
+    async function downloadCard(cardId) {
+      await document.fonts.ready;
+      const btn = document.querySelector(`button[data-card="${cardId}"]`);
+      if (btn) { btn.disabled = true; btn.textContent = 'Capturing…'; }
+      try {
+        await captureCard(cardId);
+      } catch (e) {
+        console.error(e);
+        alert(`Failed to capture ${cardId}: ${e.message}`);
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = 'Download PNG'; }
+      }
+    }
+
+    async function downloadGroup(ids, label) {
+      await document.fonts.ready;
+      overlay.classList.add('active');
+      progressTotal.textContent = ids.length;
+      for (let i = 0; i < ids.length; i++) {
+        progressCurrent.textContent = i + 1;
+        progressLabel.textContent = `Rendering ${ids[i]}…`;
+        await captureCard(ids[i]);
+        // Brief pause so the browser can queue each download separately
+        await new Promise(r => setTimeout(r, 450));
+      }
+      progressLabel.textContent = 'Done. Check your Downloads folder.';
+      setTimeout(() => overlay.classList.remove('active'), 800);
+    }
+
+    const FEED_IDS = ['feed-1', 'feed-2', 'feed-3', 'feed-4', 'feed-5'];
+    const STORY_IDS = ['story-1', 'story-2', 'story-3', 'story-4', 'story-5'];
+
+    document.getElementById('downloadAllFeed').addEventListener('click', () => downloadGroup(FEED_IDS, 'feed'));
+    document.getElementById('downloadAllStory').addEventListener('click', () => downloadGroup(STORY_IDS, 'story'));
+    document.getElementById('downloadEverything').addEventListener('click', () => downloadGroup([...FEED_IDS, ...STORY_IDS], 'all'));
+
+    // Wire per-card buttons (added below each card's card-id)
+    document.querySelectorAll('button[data-card]').forEach(btn => {
+      btn.addEventListener('click', () => downloadCard(btn.dataset.card));
+    });
+  </script>
+
+</body>
+</html>
