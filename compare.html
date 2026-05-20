@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hero Variants - SideQuest</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== Compare page chrome ===== */
+    body { padding-top: 0; }
+
+    .variant-divider {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 40px 24px;
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .variant-divider:first-of-type { border-top: none; padding-top: 80px; }
+    .variant-divider .variant-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #000;
+      background: var(--green);
+      padding: 4px 10px;
+      border-radius: 100px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .variant-divider .variant-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+    .variant-divider .variant-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-left: auto;
+      max-width: 460px;
+      text-align: right;
+    }
+
+    .variant {
+      position: relative;
+      overflow: hidden;
+    }
+    .variant .hero {
+      min-height: auto;
+      padding: 40px 40px 80px;
+    }
+
+    /* ===== Shared additions ===== */
+    .price-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .price-hint strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+    .price-hint .dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      display: inline-block;
+    }
+    .pricing-link {
+      color: var(--green);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      transition: opacity 0.2s ease;
+    }
+    .pricing-link:hover { opacity: 0.8; }
+
+    /* ===== V2 audience pills ===== */
+    .audience-pills {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .audience-pill {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 100px;
+      letter-spacing: 0.04em;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+    }
+    .audience-pill.active {
+      background: var(--green-dim);
+      color: var(--green);
+      border-color: rgba(34,197,94,0.3);
+    }
+
+    /* ===== V2 dual-phone visual ===== */
+    .dual-phones {
+      position: relative;
+      width: 320px;
+      height: 460px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .dual-phones img {
+      position: absolute;
+      width: 200px;
+      border-radius: 28px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.06);
+    }
+    .dual-phones .phone-back {
+      transform: translate(-50px, 24px) rotate(-6deg);
+      opacity: 0.75;
+      z-index: 0;
+    }
+    .dual-phones .phone-front {
+      transform: translate(40px, -16px) rotate(4deg);
+      z-index: 1;
+    }
+
+    @media (max-width: 900px) {
+      .variant-divider { padding: 48px 24px 8px; flex-wrap: wrap; }
+      .variant-divider .variant-desc { text-align: left; margin-left: 0; }
+      .dual-phones { width: 240px; height: 380px; }
+      .dual-phones img { width: 160px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV (sticky, for orientation) -->
+  <nav class="nav">
+    <img src="assets/logo.png" alt="SideQuest" class="nav-logo">
+    <a href="/" class="nav-cta">Live page</a>
+  </nav>
+
+  <!-- ============================================================
+       VARIANT 1 — BUSINESS-LED HERO
+       ============================================================ -->
+  <div class="variant-divider">
+    <span class="variant-tag">V1</span>
+    <span class="variant-name">Business-led</span>
+    <span class="variant-desc">Speaks directly to employers. Strongest for ads targeting business owners — leads with their problem and outcome.</span>
+  </div>
+
+  <div class="variant">
+    <section class="hero">
+      <div class="hero-content">
+        <div class="badge">For local businesses</div>
+        <h1>Your next hire is<br><span class="accent">already nearby.</span></h1>
+        <p class="hero-sub">Post a gig in minutes. Browse real applicant profiles with video intros. No resume sorting, no agencies — just local people ready to work.</p>
+        <div class="hero-actions">
+          <div class="store-pills">
+            <a href="https://apps.apple.com/us/app/sidequest-find-local-jobs/id6760982014" target="_blank" class="app-store-btn pulse-btn">
+              <svg class="apple-icon" viewBox="0 0 384 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+              </svg>
+              <div class="app-store-text">
+                <span class="download-text">Download on the</span>
+                <span class="store-name">App Store</span>
+              </div>
+            </a>
+            <a href="/pricing.html" class="pricing-link">See pricing &rarr;</a>
+          </div>
+          <span class="price-hint"><strong>Free to post</strong> <span class="dot"></span> Premium $24.99/mo with a 30-day trial</span>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="phone-glow"></div>
+        <img src="screenshots/biz_listings.view.png" alt="SideQuest business listings" class="hero-phone floating">
+      </div>
+    </section>
+  </div>
+
+  <!-- ============================================================
+       VARIANT 2 — DUAL-AUDIENCE HERO
+       ============================================================ -->
+  <div class="variant-divider">
+    <span class="variant-tag">V2</span>
+    <span class="variant-name">Dual-audience</span>
+    <span class="variant-desc">Acknowledges both sides up front. Best if ads target a mix of workers and businesses, or if you want one page to serve both.</span>
+  </div>
+
+  <div class="variant">
+    <section class="hero">
+      <div class="hero-content">
+        <div class="audience-pills">
+          <span class="audience-pill active">For businesses</span>
+          <span class="audience-pill active">For applicants</span>
+        </div>
+        <h1>Hiring or hired.<br><span class="accent">One platform.</span></h1>
+        <p class="hero-sub">SideQuest connects local businesses with the people who want to work for them. Apply in a swipe. Hire from your phone. Free to start on both sides.</p>
+        <div class="hero-actions">
+          <div class="store-pills">
+            <a href="https://apps.apple.com/us/app/sidequest-find-local-jobs/id6760982014" target="_blank" class="app-store-btn pulse-btn">
+              <svg class="apple-icon" viewBox="0 0 384 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+              </svg>
+              <div class="app-store-text">
+                <span class="download-text">Download on the</span>
+                <span class="store-name">App Store</span>
+              </div>
+            </a>
+            <a href="/pricing.html" class="pricing-link">See pricing &rarr;</a>
+          </div>
+          <span class="price-hint">Applicants: <strong>always free</strong> <span class="dot"></span> Businesses: <strong>free to start</strong>, $24.99/mo for Premium</span>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="phone-glow"></div>
+        <div class="dual-phones">
+          <img src="screenshots/Applicant_feed_view.png" alt="Applicant feed" class="phone-back">
+          <img src="screenshots/biz_listings.view.png" alt="Business listings" class="phone-front floating">
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============================================================
+       VARIANT 3 — CURRENT + SMALL ADDITIONS
+       ============================================================ -->
+  <div class="variant-divider">
+    <span class="variant-tag">V3</span>
+    <span class="variant-name">Current + pricing hint</span>
+    <span class="variant-desc">Keeps the current applicant-voiced hero almost exactly. Adds a pricing hint and secondary CTA. Lowest-risk, smallest change.</span>
+  </div>
+
+  <div class="variant">
+    <section class="hero">
+      <div class="hero-content">
+        <div class="badge">Now live on iOS</div>
+        <h1>Work, found<br><span class="accent">differently.</span></h1>
+        <p class="hero-sub">No resume. No cover letter. Just swipe, connect, and get hired locally.</p>
+        <div class="hero-actions">
+          <div class="store-pills">
+            <a href="https://apps.apple.com/us/app/sidequest-find-local-jobs/id6760982014" target="_blank" class="app-store-btn pulse-btn">
+              <svg class="apple-icon" viewBox="0 0 384 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+              </svg>
+              <div class="app-store-text">
+                <span class="download-text">Download on the</span>
+                <span class="store-name">App Store</span>
+              </div>
+            </a>
+            <a href="/pricing.html" class="pricing-link">See pricing &rarr;</a>
+          </div>
+          <span class="price-hint"><strong>Free for everyone</strong> <span class="dot"></span> Optional Premium for businesses ($24.99/mo)</span>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="phone-glow"></div>
+        <img src="screenshots/Applicant_feed_view.png" alt="SideQuest App Feed" class="hero-phone floating">
+      </div>
+    </section>
+  </div>
+
+  <!-- Footnote -->
+  <div class="variant-divider" style="border-top: 1px solid var(--border); padding-bottom: 80px;">
+    <span class="variant-desc" style="margin-left: 0; text-align: left; max-width: 100%;">
+      Once you pick a variant, tell me the number (V1, V2, or V3) and I'll merge it into <code>index.html</code> as the live hero.
+    </span>
+  </div>
+
+  <script>
+    document.documentElement.classList.add('js');
+  </script>
+</body>
+</html>

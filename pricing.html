@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing - SideQuest</title>
+  <meta name="description" content="Simple, transparent pricing for businesses hiring on SideQuest. Free to start, $24.99/month for Premium. Applicants always use SideQuest for free." />
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== Pricing hero ===== */
+    .pricing-hero {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 140px 24px 32px;
+      text-align: center;
+      position: relative;
+    }
+    .pricing-hero::before {
+      content: '';
+      position: absolute;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+      height: 360px;
+      background: radial-gradient(ellipse, rgba(34,197,94,0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: -1;
+    }
+    .pricing-hero .section-label {
+      margin-bottom: 16px;
+    }
+    .pricing-hero h1 {
+      font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+    .pricing-hero .accent {
+      color: var(--green);
+    }
+    .pricing-hero p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .pricing-back {
+      display: inline-block;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+      transition: color 0.2s ease;
+    }
+    .pricing-back:hover { color: var(--green); }
+
+    /* ===== Pricing container ===== */
+    .pricing-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 24px 40px;
+    }
+
+    /* ===== Tier cards ===== */
+    .tier-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+    .tier-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.3s ease, transform 0.3s ease;
+    }
+    .tier-card:hover {
+      border-color: rgba(34,197,94,0.3);
+      transform: translateY(-4px);
+    }
+    .tier-card.featured {
+      border-color: rgba(34,197,94,0.35);
+      background: linear-gradient(180deg, rgba(34,197,94,0.05) 0%, var(--surface) 100%);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.35), 0 0 0 1px rgba(34,197,94,0.15);
+    }
+    .featured-badge {
+      position: absolute;
+      top: -12px;
+      right: 24px;
+      background: var(--green);
+      color: #000;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 100px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .tier-name {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 14px;
+    }
+    .tier-card.featured .tier-name {
+      color: var(--green);
+    }
+
+    .tier-price {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+    .tier-price .amount {
+      font-size: 2.8rem;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+    .tier-price .period {
+      font-size: 1rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .tier-secondary-price {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+    .tier-secondary-price .saving {
+      color: var(--green);
+      font-weight: 600;
+      margin-left: 8px;
+    }
+
+    .tier-tagline {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin: 20px 0 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tier-features {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 28px;
+      flex: 1;
+    }
+    .tier-features li {
+      font-size: 0.95rem;
+      color: var(--text);
+      padding-left: 28px;
+      position: relative;
+      line-height: 1.5;
+    }
+    .tier-features li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 4px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background-color: var(--green-dim);
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 18 18' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 9l2.5 2.5L13 6' stroke='%2322c55e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    .tier-features li.muted {
+      color: var(--text-muted);
+    }
+    .tier-features li.muted::before {
+      background-color: rgba(255,255,255,0.05);
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 18 18' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 6l6 6M12 6l-6 6' stroke='rgba(240,240,245,0.4)' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+    }
+    .tier-features .feature-meta {
+      display: block;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .tier-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 14px 20px;
+      border-radius: 100px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: opacity 0.2s ease, transform 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+      letter-spacing: -0.01em;
+    }
+    .tier-cta.primary {
+      background: var(--green);
+      color: #000;
+    }
+    .tier-cta.secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .tier-cta:hover { opacity: 0.9; transform: scale(1.02); }
+    .tier-cta.secondary:hover {
+      border-color: var(--green);
+      color: var(--green);
+      opacity: 1;
+    }
+    .tier-cta .apple-icon {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+    .trial-note {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 14px;
+    }
+    .trial-note strong {
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    /* ===== Compare ===== */
+    .compare-section {
+      margin-top: 80px;
+    }
+    .compare-section .section-label,
+    .compare-section .section-title {
+      text-align: center;
+    }
+    .compare-section .section-title {
+      margin-bottom: 40px;
+    }
+    .compare-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .compare-table thead th {
+      background: rgba(255,255,255,0.02);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      text-align: left;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .compare-table tbody td {
+      padding: 18px 24px;
+      font-size: 0.95rem;
+      color: var(--text);
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    .compare-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+    .compare-table .platform {
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    .compare-table .price {
+      font-variant-numeric: tabular-nums;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .compare-table .listings {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    .compare-table tr.us {
+      background: linear-gradient(90deg, rgba(34,197,94,0.08) 0%, rgba(34,197,94,0.02) 100%);
+    }
+    .compare-table tr.us td {
+      color: var(--text);
+    }
+    .compare-table tr.us .platform {
+      color: var(--green);
+    }
+    .compare-table tr.us .platform::before {
+      content: '★ ';
+      color: var(--green);
+    }
+    .compare-table tr.us .price {
+      color: var(--green);
+    }
+    .compare-note {
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 16px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 760px) {
+      .compare-table thead { display: none; }
+      .compare-table tbody tr {
+        display: block;
+        padding: 16px 20px;
+        border-bottom: 1px solid var(--border);
+      }
+      .compare-table tbody tr:last-child { border-bottom: none; }
+      .compare-table tbody td {
+        display: block;
+        padding: 4px 0;
+        border-bottom: none;
+      }
+      .compare-table .platform {
+        font-size: 1rem;
+        margin-bottom: 4px;
+      }
+      .compare-table .price {
+        font-size: 1.05rem;
+      }
+      .compare-table .listings {
+        font-size: 0.85rem;
+      }
+    }
+
+    /* ===== Add-ons ===== */
+    .addons-section {
+      margin-top: 80px;
+    }
+    .addons-section .section-label,
+    .addons-section .section-title {
+      text-align: center;
+    }
+    .addons-section .section-title {
+      margin-bottom: 40px;
+    }
+    .addons-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .addon-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: border-color 0.3s ease, transform 0.3s ease;
+    }
+    .addon-card:hover {
+      border-color: rgba(34,197,94,0.3);
+      transform: translateY(-4px);
+    }
+    .addon-card .addon-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+    .addon-card .addon-price {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+    .addon-card .addon-price .addon-period {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-left: 4px;
+    }
+    .addon-card .addon-desc {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ===== Applicants card ===== */
+    .applicants-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 56px 40px;
+      margin-top: 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .applicants-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 200px;
+      background: radial-gradient(ellipse, rgba(34,197,94,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .applicants-card .section-label {
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .applicants-card h2 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .applicants-card p {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.75;
+      position: relative;
+    }
+    .applicants-card .applicant-premium {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--green-dim);
+      color: var(--green);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: 100px;
+      border: 1px solid rgba(34,197,94,0.25);
+      margin-top: 20px;
+      position: relative;
+    }
+
+    /* ===== FAQ ===== */
+    .pricing-faq {
+      margin-top: 80px;
+    }
+    .pricing-faq .section-label,
+    .pricing-faq .section-title {
+      text-align: center;
+    }
+    .pricing-faq .section-title {
+      margin-bottom: 36px;
+    }
+    .faq-list {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .faq-list .faq-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 20px 22px;
+      margin-bottom: 12px;
+      transition: border-color 0.2s ease;
+    }
+    .faq-list .faq-item:hover {
+      border-color: rgba(34,197,94,0.3);
+    }
+    .faq-list .faq-item summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text);
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .faq-list .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-list .faq-item summary::after {
+      content: '+';
+      color: var(--green);
+      font-size: 1.4rem;
+      font-weight: 400;
+      transition: transform 0.2s ease;
+      line-height: 1;
+    }
+    .faq-list .faq-item[open] summary::after {
+      transform: rotate(45deg);
+    }
+    .faq-list .faq-item p {
+      margin-top: 12px;
+      margin-bottom: 0;
+      color: var(--text-muted);
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+
+    /* ===== Final CTA ===== */
+    .final-cta {
+      margin-top: 80px;
+      text-align: center;
+      padding: 0 24px;
+    }
+    .final-cta h2 {
+      font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 28px;
+    }
+    .final-cta .app-store-btn {
+      display: inline-flex;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 760px) {
+      .pricing-hero { padding: 110px 20px 16px; }
+      .pricing-container { padding: 24px 20px 32px; }
+      .tier-grid { grid-template-columns: 1fr; gap: 20px; }
+      .tier-card { padding: 28px 24px; }
+      .addons-grid { grid-template-columns: 1fr; }
+      .applicants-card { padding: 40px 24px; }
+      .addons-section, .applicants-card, .pricing-faq, .final-cta { margin-top: 56px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="/"><img src="assets/logo.png" alt="SideQuest" class="nav-logo"></a>
+    <a href="https://apps.apple.com/us/app/sidequest-find-local-jobs/id6760982014" target="_blank" class="nav-cta">Get the App</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="pricing-hero reveal">
+    <a href="/" class="pricing-back">&larr; Back to Home</a>
+    <div class="section-label">Pricing</div>
+    <h1>Hire locally.<br><span class="accent">Pay simply.</span></h1>
+    <p>Start free, upgrade when you need more reach. No setup fees, no contracts, no surprises &mdash; just transparent pricing for businesses ready to hire.</p>
+  </section>
+
+  <!-- TIERS -->
+  <div class="pricing-container">
+    <div class="tier-grid">
+
+      <!-- FREE -->
+      <div class="tier-card reveal">
+        <div class="tier-name">Free</div>
+        <div class="tier-price">
+          <span class="amount">$0</span>
+          <span class="period">forever</span>
+        </div>
+        <p class="tier-tagline">Everything you need to make your first hire. No card required.</p>
+        <ul class="tier-features">
+          <li>1 active job listing</li>
+          <li>Video intros from every applicant<span class="feature-meta">See personality first &mdash; no resume guesswork</span></li>
+          <li>Unlimited applicant views</li>
+          <li>Direct messaging with applicants</li>
+          <li>Update applicant status (reviewed, hired, etc.)</li>
+          <li>Business profile &mdash; photo, bio, socials</li>
+          <li>Applicant contact info (email &amp; phone)</li>
+          <li class="muted">Priority listing placement</li>
+          <li class="muted">Verified badge</li>
+        </ul>
+        <a href="https://apps.apple.com/us/app/sidequest-find-local-jobs/id6760982014" target="_blank" class="tier-cta secondary">
+          <svg class="apple-icon" viewBox="0 0 384 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+          </svg>
+          Get started free
+        </a>
+      </div>
+
+      <!-- PREMIUM -->
+      <div class="tier-card featured reveal delay-1">
+        <span class="featured-badge">Most Popular</span>
+        <div class="tier-name">Premium</div>
+        <div class="tier-price">
+          <span class="amount">$24.99</span>
+          <span class="period">/ month</span>
+        </div>
+        <div class="tier-secondary-price">
+          or $199 / year <span class="saving">Save ~33%</span>
+        </div>
+        <p class="tier-tagline">For businesses hiring across multiple roles. More reach, better placement, faster hires.</p>
+        <ul class="tier-features">
+          <li><strong>Up to 5 active listings</strong><span class="feature-meta">5&times; the hiring volume of Free</span></li>
+          <li>Priority placement in the applicant feed<span class="feature-meta">Your listings rank higher, so more applicants see them first</span></li>
+          <li>Verified badge eligibility<span class="feature-meta">Submit Yelp or LinkedIn for review</span></li>
+          <li>Everything in Free</li>
+          <li>Cancel anytime, no contract</li>
+        </ul>
+        <a href="https://apps.apple.com/us/app/sidequest-find-local-jobs/id6760982014" target="_blank" class="tier-cta primary">
+          <svg class="apple-icon" viewBox="0 0 384 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+          </svg>
+          Upgrade in the app
+        </a>
+        <p class="trial-note">Every new business gets <strong>30 days of Premium free</strong> &mdash; no card needed.</p>
+      </div>
+
+    </div>
+
+    <!-- COMPETITOR COMPARISON -->
+    <section class="compare-section reveal" id="compare">
+      <div class="section-label">How we compare</div>
+      <h2 class="section-title">Cheaper.<br>By a lot.</h2>
+
+      <div class="compare-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Platform</th>
+              <th>Starting price</th>
+              <th>What you get</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="us">
+              <td class="platform">SideQuest Premium</td>
+              <td class="price">$24.99 / mo</td>
+              <td class="listings">Up to 5 listings &middot; unlimited applicants &middot; messaging &middot; priority placement</td>
+            </tr>
+            <tr>
+              <td class="platform">Snagajob</td>
+              <td class="price">$89 / mo</td>
+              <td class="listings">1 listing per subscription</td>
+            </tr>
+            <tr>
+              <td class="platform">OfferUp Jobs</td>
+              <td class="price">$25 / post</td>
+              <td class="listings">Pay per listing &middot; 1 free per month</td>
+            </tr>
+            <tr>
+              <td class="platform">Indeed</td>
+              <td class="price">$120&ndash;$400 / mo</td>
+              <td class="listings">Subscription or $15&ndash;$50 per application</td>
+            </tr>
+            <tr>
+              <td class="platform">ZipRecruiter</td>
+              <td class="price">$399+ / mo</td>
+              <td class="listings">Subscription &middot; SMB and up</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="compare-note">Competitor pricing as publicly listed by each platform. Subject to change. Listing counts and feature mixes vary &mdash; we've focused on the closest equivalent to a SideQuest Premium subscription.</p>
+    </section>
+
+    <!-- ADD-ONS -->
+    <section class="addons-section reveal">
+      <div class="section-label">Add-ons</div>
+      <h2 class="section-title">Pay only when you need it.</h2>
+
+      <div class="addons-grid">
+        <div class="addon-card">
+          <div class="addon-name">Listing Boost</div>
+          <div class="addon-price">$5.99<span class="addon-period">one-time</span></div>
+          <p class="addon-desc">Feature one of your listings at the top of the applicant feed for 7 days. Perfect for urgent hires &mdash; like staffing up for a busy weekend.</p>
+        </div>
+        <div class="addon-card">
+          <div class="addon-name">Extra Listing Slot</div>
+          <div class="addon-price">$9.99<span class="addon-period">/ month</span></div>
+          <p class="addon-desc">On the Free plan? Add one more active listing without committing to Premium. Stack as many as you need, cancel anytime.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- APPLICANTS -->
+    <section class="applicants-card reveal">
+      <div class="section-label">For applicants</div>
+      <h2>Applying for jobs is <span class="accent">always free.</span></h2>
+      <p>If you're using SideQuest to find work, there's nothing to pay. Browse local gigs, build your profile, message employers, and apply &mdash; all at no cost. An optional Premium tier is available if you want unlimited applications and priority visibility.</p>
+      <div class="applicant-premium">Applicant Premium &mdash; $5.99 / month (optional)</div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="pricing-faq reveal">
+      <div class="section-label">FAQ</div>
+      <h2 class="section-title">Pricing questions.</h2>
+
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>Do I need to enter a card to try Premium?</summary>
+          <p>No. Every new business account starts with a 30-day Premium trial automatically &mdash; no payment method required. When the trial ends, you'll be downgraded to Free unless you choose to subscribe.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Can I cancel anytime?</summary>
+          <p>Yes. Premium is month-to-month (or annual) with no contract. You can cancel directly from your iPhone's Subscriptions settings, and you'll keep Premium features until the end of your current billing period.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>What happens to my listings if I downgrade?</summary>
+          <p>If you have more than 1 active listing when you drop to Free, your existing listings stay visible but you won't be able to publish new ones until you're back under the limit. You can also use Extra Listing Slot ($9.99/month) to keep additional listings active without re-subscribing to Premium.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>How does the annual plan work?</summary>
+          <p>Annual billing is $199/year &mdash; roughly 33% off the monthly price (effectively 4 months free). It renews once a year and can be cancelled anytime from your phone's Subscription settings.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Are payments processed by Apple?</summary>
+          <p>Yes. All subscriptions and add-ons go through Apple's App Store, so billing, receipts, refunds, and cancellations all live in your iPhone's Settings &rarr; Subscriptions.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Will pricing change later?</summary>
+          <p>Possibly. As SideQuest grows, we may raise prices for new subscribers &mdash; but anyone already subscribed at a given price is locked in at that rate for the life of their subscription.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Is there a refund policy?</summary>
+          <p>All refunds are handled by Apple, per their standard App Store refund policy. You can request a refund directly at <a href="https://reportaproblem.apple.com" target="_blank">reportaproblem.apple.com</a>.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final-cta reveal">
+      <h2>Ready to make your first hire?</h2>
+      <a href="https://apps.apple.com/us/app/sidequest-find-local-jobs/id6760982014" target="_blank" class="app-store-btn pulse-btn">
+        <svg class="apple-icon" viewBox="0 0 384 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+        </svg>
+        <div class="app-store-text">
+          <span class="download-text">Download on the</span>
+          <span class="store-name">App Store</span>
+        </div>
+      </a>
+    </section>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <img src="assets/logo.png" alt="SideQuest" class="footer-logo">
+    <div class="footer-nav">
+      <a href="/about.html">About</a>
+      <a href="/pricing.html">Pricing</a>
+      <a href="/support.html">Support</a>
+    </div>
+    <div class="footer-legal">
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms of Service</a>
+    </div>
+    <p class="footer-copyright">&copy; 2025 SideQuest Labs LLC</p>
+  </footer>
+
+  <script>
+    document.documentElement.classList.add('js');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About - SideQuest</title>
+  <meta name="description" content="SideQuest is a faster, more human way to hire and get hired locally. No resumes, no agencies, no middlemen." />
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .about-hero {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 140px 24px 32px;
+      text-align: center;
+      position: relative;
+    }
+    .about-hero::before {
+      content: '';
+      position: absolute;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+      height: 360px;
+      background: radial-gradient(ellipse, rgba(34,197,94,0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: -1;
+    }
+    .about-hero .section-label { margin-bottom: 16px; }
+    .about-hero h1 {
+      font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+    .about-hero .accent { color: var(--green); }
+    .about-hero p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .about-back {
+      display: inline-block;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+      transition: color 0.2s ease;
+    }
+    .about-back:hover { color: var(--green); }
+
+    .about-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 24px 40px;
+    }
+
+    .about-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 48px;
+      margin-bottom: 24px;
+    }
+    .about-block .section-label { margin-bottom: 14px; }
+    .about-block h2 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .about-block p {
+      font-size: 1.02rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+    .about-block p:last-child { margin-bottom: 0; }
+
+    .principles-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+      margin-top: 28px;
+    }
+    .principle-card {
+      background: rgba(34,197,94,0.04);
+      border: 1px solid rgba(34,197,94,0.15);
+      border-radius: var(--radius-sm);
+      padding: 24px;
+    }
+    .principle-card .principle-num {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--green);
+      background: var(--green-dim);
+      padding: 4px 10px;
+      border-radius: 100px;
+      letter-spacing: 0.1em;
+      margin-bottom: 14px;
+    }
+    .principle-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .principle-card p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 28px;
+    }
+    .stat {
+      text-align: center;
+      padding: 24px 12px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+    }
+    .stat .stat-num {
+      display: block;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .stat .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 28px;
+    }
+    .contact-btn {
+      flex: 1;
+      min-width: 220px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 20px 24px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    .contact-btn:hover {
+      border-color: var(--green);
+      transform: translateY(-2px);
+    }
+    .contact-btn .contact-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .contact-btn .contact-value {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    @media (max-width: 760px) {
+      .about-hero { padding: 110px 20px 16px; }
+      .about-container { padding: 24px 20px 32px; }
+      .about-block { padding: 32px 24px; }
+      .principles-grid { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+      .stat { padding: 18px 8px; }
+      .stat .stat-num { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="/"><img src="assets/logo.png" alt="SideQuest" class="nav-logo"></a>
+    <div class="nav-actions">
+      <a href="/pricing.html" class="nav-cta-secondary">See Pricing</a>
+      <a href="https://apps.apple.com/us/app/sidequest-find-local-jobs/id6760982014" target="_blank" class="nav-cta">Get the App</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="about-hero reveal">
+    <a href="/" class="about-back">&larr; Back to Home</a>
+    <div class="section-label">About</div>
+    <h1>Building a better way<br>to <span class="accent">hire locally.</span></h1>
+    <p>SideQuest is a small, independent team rethinking what local hiring looks like in the age of swipe-and-tap. We believe local opportunity deserves better tools &mdash; not more friction.</p>
+  </section>
+
+  <div class="about-container">
+
+    <!-- WHY -->
+    <section class="about-block reveal">
+      <div class="section-label">Why we built this</div>
+      <h2>Local hiring is broken.</h2>
+      <p>The way local businesses hire today hasn't changed in 20 years. You write a job description nobody reads, pay $89 a month to a board nobody trusts, then sift through PDF resumes that say almost nothing about who someone actually is.</p>
+      <p>Meanwhile, the people who'd be great for those roles &mdash; the cooks, baristas, retail associates, line workers, contractors &mdash; are scrolling through job apps built for software engineers and corporate recruiters. They don't have a polished LinkedIn. They have a story to tell.</p>
+      <p>SideQuest exists because <strong>local jobs are not the same as corporate jobs</strong>. They shouldn't share the same pipeline.</p>
+    </section>
+
+    <!-- WHAT WE BELIEVE -->
+    <section class="about-block reveal">
+      <div class="section-label">What we believe</div>
+      <h2>Three principles that<br>shape everything we build.</h2>
+
+      <div class="principles-grid">
+        <div class="principle-card">
+          <span class="principle-num">01</span>
+          <h3>People over paper</h3>
+          <p>A 30-second video tells a business more about a candidate than a 2-page resume ever could. We lead with the person.</p>
+        </div>
+        <div class="principle-card">
+          <span class="principle-num">02</span>
+          <h3>Local means local</h3>
+          <p>The most rewarding jobs are often a five-minute walk away. We surface opportunity by geography, not algorithm.</p>
+        </div>
+        <div class="principle-card">
+          <span class="principle-num">03</span>
+          <h3>Fair, transparent pricing</h3>
+          <p>Applicants never pay to apply. Businesses pay a flat rate that's a fraction of legacy job boards &mdash; no per-application surcharges, no surprise fees.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- AT A GLANCE -->
+    <section class="about-block reveal">
+      <div class="section-label">At a glance</div>
+      <h2>The basics.</h2>
+      <p>SideQuest is built by SideQuest Labs LLC, an independent team based in the United States. The iOS app launched in 2026.</p>
+      <div class="stats-row">
+        <div class="stat">
+          <span class="stat-num">2026</span>
+          <span class="stat-label">Launched on iOS</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">$24.99</span>
+          <span class="stat-label">Business Premium / mo</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">$0</span>
+          <span class="stat-label">For applicants, always</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="about-block reveal">
+      <div class="section-label">Get in touch</div>
+      <h2>We read every message.</h2>
+      <p>Got a question, a partnership idea, or feedback on the app? Reach out &mdash; we're a small team and we actually respond.</p>
+
+      <div class="contact-row">
+        <a href="mailto:dev@sidequestapp.io" class="contact-btn">
+          <span class="contact-label">Email</span>
+          <span class="contact-value">dev@sidequestapp.io</span>
+        </a>
+        <a href="/support.html" class="contact-btn">
+          <span class="contact-label">Support</span>
+          <span class="contact-value">Get help &rarr;</span>
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <img src="assets/logo.png" alt="SideQuest" class="footer-logo">
+    <div class="footer-nav">
+      <a href="/about.html">About</a>
+      <a href="/pricing.html">Pricing</a>
+      <a href="/support.html">Support</a>
+    </div>
+    <div class="footer-legal">
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms of Service</a>
+    </div>
+    <p class="footer-copyright">&copy; 2025 SideQuest Labs LLC</p>
+  </footer>
+
+  <script>
+    document.documentElement.classList.add('js');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

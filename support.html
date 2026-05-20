@@ -47,7 +47,8 @@
       padding-left: 20px;
       margin-bottom: 12px;
     }
-    .legal-container a {
+    .legal-container a,
+    .legal-container a:visited {
       color: var(--green);
       text-decoration: none;
     }
@@ -143,7 +144,10 @@
 
   <nav class="nav">
     <a href="/"><img src="assets/logo.png" alt="SideQuest" class="nav-logo"></a>
-    <a href="mailto:dev@sidequestapp.io" class="nav-cta">Contact Support</a>
+    <div class="nav-actions">
+      <a href="/pricing.html" class="nav-cta-secondary">See Pricing</a>
+      <a href="https://apps.apple.com/us/app/sidequest-find-local-jobs/id6760982014" target="_blank" class="nav-cta">Get the App</a>
+    </div>
   </nav>
 
   <div class="legal-container">
@@ -186,7 +190,7 @@
 
     <details class="faq-item">
       <summary>How do I delete my account?</summary>
-      <p>Go to <strong>Settings &rarr; Account &rarr; Delete Account</strong> in the app. Your personal data will be deleted or anonymized within 30 days, as described in our <a href="/privacy">Privacy Policy</a>.</p>
+      <p>Go to <strong>Settings &rarr; Account &rarr; Delete Account</strong> in the app. Your personal data will be deleted or anonymized within 30 days, as described in our <a href="/privacy.html">Privacy Policy</a>.</p>
     </details>
 
     <details class="faq-item">
@@ -211,8 +215,8 @@
 
     <h2>Other Resources</h2>
     <ul>
-      <li><a href="/privacy">Privacy Policy</a></li>
-      <li><a href="/terms">Terms of Service</a></li>
+      <li><a href="/privacy.html">Privacy Policy</a></li>
+      <li><a href="/terms.html">Terms of Service</a></li>
     </ul>
 
     <h2>Contact</h2>
@@ -224,7 +228,16 @@
 
   <footer class="footer">
     <img src="assets/logo.png" alt="SideQuest" class="footer-logo">
-    <p>&copy; 2025 SideQuest Labs LLC &middot; <a href="/privacy">Privacy Policy</a> &middot; <a href="/terms">Terms of Service</a> &middot; <a href="/support">Support</a></p>
+    <div class="footer-nav">
+      <a href="/about.html">About</a>
+      <a href="/pricing.html">Pricing</a>
+      <a href="/support.html">Support</a>
+    </div>
+    <div class="footer-legal">
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms of Service</a>
+    </div>
+    <p class="footer-copyright">&copy; 2025 SideQuest Labs LLC</p>
   </footer>
 
 </body>

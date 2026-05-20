@@ -70,7 +70,14 @@ body::before {
   filter: invert(1);
 }
 
-.nav-cta {
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-cta,
+.nav-cta:visited {
   background: var(--green);
   color: #000;
   font-weight: 700;
@@ -85,6 +92,36 @@ body::before {
 .nav-cta:hover {
   opacity: 0.85;
   transform: scale(1.03);
+}
+
+.nav-cta-secondary,
+.nav-cta-secondary:visited {
+  background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.025) 100%);
+  color: var(--text);
+  font-weight: 700;
+  font-size: 0.875rem;
+  padding: 10px 20px;
+  border-radius: 100px;
+  border: 1px solid rgba(255,255,255,0.1);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.06),
+    0 2px 8px rgba(0,0,0,0.25);
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.nav-cta-secondary:hover {
+  background: linear-gradient(180deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.05) 100%);
+  border-color: rgba(255,255,255,0.2);
+  transform: scale(1.03);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    0 4px 14px rgba(0,0,0,0.35);
+}
+
+@media (max-width: 540px) {
+  .nav-cta-secondary { display: none; }
 }
 
 /* =========================================
@@ -189,6 +226,42 @@ body::before {
   font-size: 0.9rem;
   color: var(--text-muted);
   font-weight: 500;
+}
+
+.pricing-link,
+.pricing-link:visited {
+  color: var(--green);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  transition: opacity 0.2s ease;
+}
+
+.pricing-link:hover {
+  opacity: 0.8;
+}
+
+.price-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+}
+
+.price-hint strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.price-hint .dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  display: inline-block;
 }
 
 .store-pills img {
@@ -487,33 +560,75 @@ body::before {
    ========================================= */
 .footer {
   border-top: 1px solid var(--border);
-  padding: 40px;
+  padding: 56px 40px 40px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 28px;
 }
 
 .footer-logo {
-  height: 28px;
+  height: 32px;
   filter: invert(1);
-  opacity: 0.4;
+  opacity: 0.45;
 }
 
-.footer p {
-  font-size: 0.85rem;
-  color: var(--text-muted);
+.footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 36px;
 }
 
-.footer p a {
-  color: var(--text-muted);
+.footer-nav a,
+.footer-nav a:visited {
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
-.footer p a:hover {
+.footer-nav a:hover {
   color: var(--green);
+}
+
+.footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+}
+
+.footer-legal a,
+.footer-legal a:visited {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-legal a:hover {
+  color: var(--green);
+}
+
+.footer-copyright {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  opacity: 0.7;
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+@media (max-width: 600px) {
+  .footer {
+    padding: 40px 24px 32px;
+    gap: 24px;
+  }
+  .footer-nav { gap: 24px; }
+  .footer-legal { gap: 16px; }
 }
 
 /* =========================================
@@ -615,6 +730,7 @@ body::before {
     grid-template-columns: 1fr;
     gap: 48px;
   }
+
 
   .screenshot-item {
     flex-direction: row;
