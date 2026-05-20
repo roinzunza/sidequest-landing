@@ -516,6 +516,69 @@ body::before {
 }
 
 /* =========================================
+   FLOW (V2 editorial cards)
+   ========================================= */
+.flow-section {
+  border-top: 1px solid var(--border);
+}
+
+.flow-grid-wrap {
+  position: relative;
+}
+
+.flow-grid {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 20px 4px 32px;
+}
+.flow-grid::-webkit-scrollbar { display: none; }
+
+.flow-card {
+  flex: 0 0 560px;
+  width: 560px;
+  height: auto;
+  border-radius: 18px;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  box-shadow:
+    0 24px 60px rgba(0,0,0,0.5),
+    0 0 0 1px rgba(255,255,255,0.04);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  display: block;
+}
+
+.flow-card:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 36px 80px rgba(0,0,0,0.6),
+    0 0 0 1px rgba(34,197,94,0.18);
+}
+
+.flow-fade {
+  position: absolute;
+  top: 0;
+  right: -4px;
+  bottom: 0;
+  width: 100px;
+  background: linear-gradient(to left, var(--bg) 8%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+@media (max-width: 900px) {
+  .flow-card {
+    flex: 0 0 85vw;
+    width: 85vw;
+  }
+  .flow-fade { width: 50px; }
+}
+
+/* =========================================
    MISSION
    ========================================= */
 .mission-section {
