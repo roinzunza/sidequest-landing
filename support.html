@@ -142,12 +142,20 @@
 </head>
 <body>
 
-  <nav class="nav">
-    <a href="/"><img src="assets/logo.png" alt="SideQuest" class="nav-logo"></a>
-    <div class="nav-actions">
-      <a href="/pricing.html" class="nav-cta-secondary"><span class="nav-cta-full">See Pricing</span><span class="nav-cta-short">Pricing</span></a>
-      <a href="https://apps.apple.com/us/app/sidequest-find-local-jobs/id6760982014" target="_blank" class="nav-cta">Get the App</a>
+  <!-- NAV (pill — mirrors the web-ui `PillNavbar`) -->
+  <nav class="lp-nav-pill" aria-label="Primary">
+    <div class="lp-nav-pill-left">
+      <a href="/" class="lp-nav-pill-logo" aria-label="SideQuest home">
+        <img src="assets/logo.png" alt="SideQuest">
+      </a>
+      <div class="lp-nav-pill-links">
+        <a href="/" class="lp-nav-pill-link">Home</a>
+        <a href="/about.html" class="lp-nav-pill-link">About</a>
+        <a href="/pricing.html" class="lp-nav-pill-link">Pricing</a>
+        <a href="/support.html" class="lp-nav-pill-link is-active" data-collapse>Support</a>
+      </div>
     </div>
+    <a href="https://apps.apple.com/us/app/sidequest-find-local-jobs/id6760982014" target="_blank" rel="noopener" class="lp-nav-pill-cta">Get the App</a>
   </nav>
 
   <div class="legal-container">

@@ -3,511 +3,256 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SideQuest - Start Your Next Quest</title>
+  <title>SideQuest — Hire locally. Skip the résumés.</title>
+  <meta name="description" content="See a face and a video before they walk in. Post a listing in seconds, message applicants directly, and hire from anywhere on our mobile app.">
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    /* ===== STORIES CAROUSEL HERO ===== */
-    .stories-hero {
-      padding: 120px 0 60px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .stories-hero::before {
-      content: '';
-      position: absolute;
-      top: 10%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 900px;
-      height: 500px;
-      background: radial-gradient(ellipse, rgba(34,197,94,0.08) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .stories-header {
-      max-width: 1200px;
-      margin: 0 auto 28px;
-      padding: 0 40px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      position: relative;
-      z-index: 2;
-    }
-
-    .stories-controls {
-      display: flex;
-      gap: 8px;
-    }
-
-    .stories-arrow {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      color: var(--text);
-      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
-      backdrop-filter: blur(8px);
-    }
-
-    .stories-arrow:hover:not(:disabled) {
-      background: var(--green-dim);
-      border-color: rgba(34,197,94,0.4);
-      color: var(--green);
-      transform: scale(1.05);
-    }
-
-    .stories-arrow:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-    }
-
-    .stories-arrow svg {
-      width: 18px;
-      height: 18px;
-    }
-
-    /* Carousel container */
-    .stories-carousel {
-      display: flex;
-      gap: 20px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      scroll-behavior: smooth;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-      padding: 20px max(40px, calc(50% - 220px)) 32px;
-      position: relative;
-      z-index: 1;
-    }
-    .stories-carousel::-webkit-scrollbar { display: none; }
-
-    .story-card {
-      flex: 0 0 440px;
-      height: 560px;
-      border-radius: 24px;
-      padding: 40px 36px;
-      background: rgba(255,255,255,0.035);
-      border: 1px solid var(--border);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      scroll-snap-align: center;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      position: relative;
-      overflow: hidden;
-      opacity: 0.5;
-      transform: scale(0.94);
-      transition: opacity 0.55s ease, transform 0.55s ease, background 0.55s ease, border-color 0.55s ease, box-shadow 0.55s ease;
-    }
-
-    .story-card.is-active {
-      opacity: 1;
-      transform: scale(1);
-      background: linear-gradient(150deg, rgba(34,197,94,0.16) 0%, rgba(34,197,94,0.03) 55%, rgba(255,255,255,0.02) 100%);
-      border-color: rgba(34,197,94,0.32);
-      box-shadow:
-        0 30px 80px rgba(0,0,0,0.55),
-        0 0 0 1px rgba(34,197,94,0.18);
-    }
-
-    .story-card.is-active::after {
-      content: '';
-      position: absolute;
-      top: -40%;
-      left: -10%;
-      width: 120%;
-      height: 80%;
-      background: radial-gradient(ellipse, rgba(34,197,94,0.22) 0%, transparent 60%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .story-card > * { position: relative; z-index: 1; }
-
-    .story-card-label {
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-    }
-    .story-card.is-active .story-card-label { color: var(--green); }
-
-    .story-card-headline {
-      font-size: clamp(1.7rem, 2.2vw, 2.05rem);
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      color: var(--text);
-    }
-    .story-card--display .story-card-headline {
-      font-size: clamp(2.1rem, 3vw, 2.7rem);
-      letter-spacing: -0.04em;
-      line-height: 1.02;
-    }
-    .story-card.is-active .story-card-headline .accent { color: var(--green); }
-
-    .story-card-sub {
-      font-size: 1rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin-top: 4px;
-    }
-
-    .story-card-pills {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 8px;
-    }
-
-    .story-card-pill {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 18px;
-      background: rgba(0,0,0,0.32);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 100px;
-      font-size: 0.92rem;
-      color: var(--text);
-      line-height: 1.4;
-    }
-
-    .story-card-pill::before {
-      content: '';
-      flex-shrink: 0;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 8px rgba(34,197,94,0.5);
-    }
-
-    .story-card-pill--link {
-      text-decoration: none;
-      cursor: pointer;
-      transition: background 0.2s ease, border-color 0.2s ease;
-    }
-    .story-card-pill--link::after {
-      content: '→';
-      margin-left: auto;
-      color: var(--green);
-      font-weight: 700;
-      transition: transform 0.2s ease;
-    }
-    .story-card-pill--link:hover {
-      background: rgba(34,197,94,0.12);
-      border-color: rgba(34,197,94,0.3);
-    }
-    .story-card-pill--link:hover::after {
-      transform: translateX(3px);
-    }
-
-    .story-card-stat {
-      display: flex;
-      flex-direction: column;
-      margin-top: 12px;
-      padding-top: 16px;
-      border-top: 1px solid rgba(255,255,255,0.08);
-    }
-    .stat-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      padding: 9px 0;
-      font-size: 0.92rem;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-    .stat-row:last-child {
-      border-bottom: none;
-    }
-    .stat-row .stat-platform {
-      color: var(--text-muted);
-      font-weight: 500;
-      letter-spacing: -0.01em;
-    }
-    .stat-row .stat-price {
-      color: var(--text);
-      font-weight: 700;
-      font-variant-numeric: tabular-nums;
-      letter-spacing: -0.01em;
-    }
-    .stat-row--us {
-      border-top: 1px solid rgba(34,197,94,0.25);
-      margin-top: 6px;
-      padding-top: 14px;
-      border-bottom: none;
-    }
-    .stat-row--us .stat-platform {
-      color: var(--green);
-      font-weight: 700;
-    }
-    .stat-row--us .stat-price {
-      color: var(--green);
-    }
-
-    /* Pagination dots */
-    .stories-dots {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      margin-top: 8px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .stories-dot {
-      width: 8px;
-      height: 8px;
-      padding: 0;
-      border: none;
-      border-radius: 50%;
-      background: var(--border);
-      cursor: pointer;
-      transition: background 0.25s ease, width 0.25s ease;
-    }
-    .stories-dot.is-active {
-      background: var(--green);
-      width: 28px;
-      border-radius: 100px;
-    }
-    .stories-dot:hover { background: var(--text-muted); }
-    .stories-dot.is-active:hover { background: var(--green); }
-
-    /* CTA strip below carousel */
-    .stories-cta {
-      max-width: 1100px;
-      margin: 36px auto 0;
-      padding: 0 40px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-      position: relative;
-      z-index: 2;
-    }
-    .stories-cta .store-pills { gap: 16px; }
-    .stories-cta .price-hint,
-    .stories-cta .android-coming { text-align: center; }
-
-    /* Responsive */
-    @media (max-width: 760px) {
-      .stories-hero { padding: 100px 0 40px; }
-      .stories-header { padding: 0 20px; margin-bottom: 20px; }
-      .stories-arrow { display: none; }
-      .stories-carousel {
-        gap: 14px;
-        padding: 16px max(20px, calc(50% - 42vw)) 24px;
-      }
-      .story-card {
-        flex: 0 0 84vw;
-        height: 520px;
-        padding: 32px 28px;
-        border-radius: 20px;
-      }
-      .stories-cta { padding: 0 20px; }
-    }
-  </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav class="nav">
-    <a href="/"><img src="assets/logo.png" alt="SideQuest" class="nav-logo"></a>
-    <div class="nav-actions">
-      <a href="/pricing.html" class="nav-cta-secondary"><span class="nav-cta-full">See Pricing</span><span class="nav-cta-short">Pricing</span></a>
-      <a href="https://apps.apple.com/us/app/sidequest-find-local-jobs/id6760982014" target="_blank" class="nav-cta">Get the App</a>
+  <!-- NAV (pill — mirrors the web-ui `PillNavbar`) -->
+  <nav class="lp-nav-pill" aria-label="Primary">
+    <div class="lp-nav-pill-left">
+      <a href="/" class="lp-nav-pill-logo" aria-label="SideQuest home">
+        <img src="assets/logo.png" alt="SideQuest">
+      </a>
+      <div class="lp-nav-pill-links">
+        <a href="/" class="lp-nav-pill-link is-active">Home</a>
+        <a href="/about.html" class="lp-nav-pill-link">About</a>
+        <a href="/pricing.html" class="lp-nav-pill-link">Pricing</a>
+        <a href="/support.html" class="lp-nav-pill-link" data-collapse>Support</a>
+      </div>
     </div>
+    <a href="https://apps.apple.com/us/app/sidequest-find-local-jobs/id6760982014" target="_blank" rel="noopener" class="lp-nav-pill-cta">Get the App</a>
   </nav>
 
-  <!-- STORIES CAROUSEL HERO -->
-  <section class="stories-hero">
-    <div class="stories-header">
-      <div class="stories-controls">
-        <button class="stories-arrow" id="storyPrev" aria-label="Previous story">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="15 18 9 12 15 6"></polyline>
+  <!-- HERO: copy + layered phone stack -->
+  <section class="lp-hero">
+    <div class="lp-hero-copy reveal">
+      <span class="lp-hero-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15 8 22 9 17 14 18 22 12 18 6 22 7 14 2 9 9 8 12 2"></polygon></svg>
+        Local Talent Network
+      </span>
+      <h1>Hire locally.<br>Skip the <span class="accent">r&eacute;sum&eacute;s.</span></h1>
+      <p class="lp-hero-sub">
+        See a face and a video before they walk in. Post a listing in seconds,
+        message applicants directly, and hire from anywhere on our mobile app.
+      </p>
+      <div class="lp-hero-actions">
+        <a href="https://apps.apple.com/us/app/sidequest-find-local-jobs/id6760982014" target="_blank" rel="noopener" class="app-store-btn pulse-btn">
+          <svg class="apple-icon" viewBox="0 0 384 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
           </svg>
-        </button>
-        <button class="stories-arrow" id="storyNext" aria-label="Next story">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </button>
+          <div class="app-store-text">
+            <span class="download-text">Download on the</span>
+            <span class="store-name">App Store</span>
+          </div>
+        </a>
+        <span class="android-coming">Coming soon to Android</span>
+        <p class="lp-hero-fineprint">First listing free · No sales calls · Cancel anytime</p>
       </div>
     </div>
 
-    <div class="stories-carousel" id="storiesCarousel">
+    <div class="lp-hero-stack reveal" id="heroStack">
+      <div class="lp-hero-glow" aria-hidden="true"></div>
 
-      <!-- Card 1: Big statement -->
-      <article class="story-card story-card--display" data-story="1">
-        <span class="story-card-label">For local hiring</span>
-        <h2 class="story-card-headline">More than<br>a <span class="accent">r&eacute;sum&eacute;.</span></h2>
-        <p class="story-card-sub">Lead with video, photos, and work history. Add a r&eacute;sum&eacute;, cert, or license if the job needs one. See the person, not just a PDF.</p>
-      </article>
-
-      <!-- Card 2: Center / featured -->
-      <article class="story-card" data-story="2">
-        <span class="story-card-label">Why SideQuest</span>
-        <h2 class="story-card-headline">Hiring,<br><span class="accent">made simple.</span></h2>
-        <div class="story-card-pills">
-          <span class="story-card-pill">See a face and a video before they walk in</span>
-          <span class="story-card-pill">All your applicants in one place</span>
-          <a href="/pricing.html#compare" class="story-card-pill story-card-pill--link">Cheaper than our competitors</a>
-          <span class="story-card-pill">Direct messaging &mdash; no email chains</span>
-          <span class="story-card-pill">Cancel anytime</span>
-        </div>
-      </article>
-
-      <!-- Card 3: Speed -->
-      <article class="story-card story-card--display" data-story="3">
-        <span class="story-card-label">Built for speed</span>
-        <h2 class="story-card-headline">Post a job<br>in <span class="accent">seconds.</span></h2>
-        <p class="story-card-sub">First listing's free. Upgrade when you need more. No setup, no integrations, no sales calls.</p>
-      </article>
-
-      <!-- Card 4: Price comparison -->
-      <article class="story-card" data-story="4">
-        <span class="story-card-label">The math</span>
-        <h2 class="story-card-headline"><span class="accent">5 listings</span><br>for $24.99/mo.</h2>
-        <p class="story-card-sub">The big job boards charge $89 to $399 a month for a single listing. We charge $24.99 for five. Messaging, status tracking, and full applicant profiles included.</p>
-        <div class="story-card-stat">
-          <div class="stat-row">
-            <span class="stat-platform">The big job boards</span>
-            <span class="stat-price">$89 &ndash; $399 / mo</span>
-          </div>
-          <div class="stat-row stat-row--us">
-            <span class="stat-platform">SideQuest &middot; 5 listings</span>
-            <span class="stat-price">$24.99 / mo</span>
+      <!-- Order matters: data-slot attributes are set by JS on init; the
+           default-front phone (dashboard) starts in slot="front". -->
+      <button class="lp-phone" type="button" data-id="dashboard" data-slot="front" aria-label="Business dashboard — currently in front" aria-pressed="true">
+        <div class="lp-phone-float">
+          <div class="lp-phone-frame">
+            <div class="lp-phone-screen">
+              <img src="screenshots/Dashboard_view.png" alt="Business dashboard">
+              <div class="lp-phone-island" aria-hidden="true"></div>
+            </div>
           </div>
         </div>
+      </button>
+
+      <button class="lp-phone" type="button" data-id="profile" data-slot="left" aria-label="Bring Business profile to the front" aria-pressed="false">
+        <div class="lp-phone-float">
+          <div class="lp-phone-frame">
+            <div class="lp-phone-screen">
+              <img src="screenshots/profile_view.png" alt="Business profile">
+              <div class="lp-phone-island" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+      </button>
+
+      <button class="lp-phone" type="button" data-id="listing" data-slot="right" aria-label="Bring Creating a job listing to the front" aria-pressed="false">
+        <div class="lp-phone-float">
+          <div class="lp-phone-frame">
+            <div class="lp-phone-screen">
+              <img src="screenshots/new_listing_step2.png" alt="Creating a job listing">
+              <div class="lp-phone-island" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+      </button>
+
+      <!-- Pagination dots: the affordance for switching. iOS-style pill
+           dots — active dot elongates and goes mint; inactive dots stay
+           neutral. Self-explanatory, no text label needed. -->
+      <div class="lp-hero-dots" role="tablist" aria-label="Switch hero screen" id="heroDots">
+        <button type="button" class="lp-hero-dot is-active" role="tab" aria-selected="true"  data-target="dashboard" aria-label="Show business dashboard"></button>
+        <button type="button" class="lp-hero-dot"           role="tab" aria-selected="false" data-target="profile"   aria-label="Show business profile"></button>
+        <button type="button" class="lp-hero-dot"           role="tab" aria-selected="false" data-target="listing"   aria-label="Show creating a job listing"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAT STRIP -->
+  <section class="lp-section" style="padding-top: 20px;">
+    <div class="lp-stat-strip reveal">
+      <div class="lp-stat"><div class="lp-stat-value">$24.99</div><div class="lp-stat-label">Per month, all-in</div></div>
+      <div class="lp-stat"><div class="lp-stat-value">5</div><div class="lp-stat-label">Listings included</div></div>
+      <div class="lp-stat"><div class="lp-stat-value">&lt; 1 min</div><div class="lp-stat-label">To post a job</div></div>
+      <div class="lp-stat"><div class="lp-stat-value">0</div><div class="lp-stat-label">Sales calls required</div></div>
+    </div>
+  </section>
+
+  <!-- BENTO FEATURES -->
+  <section class="lp-section">
+    <span class="lp-eyebrow reveal">Why SideQuest</span>
+    <h2 class="lp-section-title reveal">A hiring stack<br>actually built for <span class="accent">local.</span></h2>
+
+    <div class="lp-bento">
+      <!-- Card A — Video-first (wide) -->
+      <article class="lp-bento-card lp-bento-card--wide reveal">
+        <span class="lp-card-eyebrow"><span class="icon-dot"></span>Video-first applications</span>
+        <h3>See the person<br>before they walk in.</h3>
+        <p>Every applicant leads with a short intro video, photos, and work history. R&eacute;sum&eacute;s and certs are there if the role needs them &mdash; never the gatekeeper.</p>
+        <div class="lp-bento-art">
+          <img src="screenshots/track_applicants_v2.png" alt="Applicants list">
+        </div>
       </article>
 
-      <!-- Card 5: For applicants -->
-      <article class="story-card story-card--display" data-story="5">
-        <span class="story-card-label">For applicants</span>
-        <h2 class="story-card-headline">Apply with your face,<br>not a <span class="accent">PDF.</span></h2>
-        <p class="story-card-sub">Add a video, photos, and work history. Throw in a r&eacute;sum&eacute; or cert if you've got one. Apply to local jobs in a tap &mdash; always free.</p>
+      <!-- Card B — Pricing math (accent) -->
+      <article class="lp-bento-card lp-bento-card--accent reveal">
+        <span class="lp-card-eyebrow"><span class="icon-dot"></span>The math</span>
+        <h3><span class="accent">5 listings</span><br>for $24.99/mo.</h3>
+        <p>The big job boards charge $89&ndash;$399/mo for one listing.</p>
+        <div class="lp-pricing-rows">
+          <div class="row"><span>The big boards</span><span>$89&ndash;$399</span></div>
+          <div class="row row--us"><span>SideQuest &middot; 5</span><span>$24.99</span></div>
+        </div>
       </article>
 
-    </div>
-
-    <div class="stories-dots" id="storiesDots">
-      <button class="stories-dot" data-index="0" aria-label="Story 1"></button>
-      <button class="stories-dot" data-index="1" aria-label="Story 2"></button>
-      <button class="stories-dot" data-index="2" aria-label="Story 3"></button>
-      <button class="stories-dot" data-index="3" aria-label="Story 4"></button>
-      <button class="stories-dot" data-index="4" aria-label="Story 5"></button>
-    </div>
-
-    <!-- CTA below carousel -->
-    <div class="stories-cta">
-      <a href="https://apps.apple.com/us/app/sidequest-find-local-jobs/id6760982014" target="_blank" class="app-store-btn pulse-btn">
-        <svg class="apple-icon" viewBox="0 0 384 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
-        </svg>
-        <div class="app-store-text">
-          <span class="download-text">Download on the</span>
-          <span class="store-name">App Store</span>
+      <!-- Card C — Direct messaging -->
+      <article class="lp-bento-card reveal">
+        <span class="lp-card-eyebrow"><span class="icon-dot"></span>Direct messaging</span>
+        <h3>No email chains.<br>No phone tag.</h3>
+        <p>Chat in-app the moment someone applies.</p>
+        <div class="lp-msg-preview">
+          <div class="lp-msg-bubble lp-msg-bubble--in">Hey! I&rsquo;m super interested &mdash; can I come by Tuesday?</div>
+          <div class="lp-msg-bubble lp-msg-bubble--out">Tuesday 2pm works. See you then.</div>
         </div>
-      </a>
-      <span class="android-coming">Coming soon to Android</span>
+      </article>
+
+      <!-- Card D — All in one (row) -->
+      <article class="lp-bento-card lp-bento-card--row reveal">
+        <span class="lp-card-eyebrow"><span class="icon-dot"></span>All in one place</span>
+        <h3>Triage applicants<br>without the spreadsheet.</h3>
+        <p>Status tracking &mdash; pending, reviewing, interviewing, hired &mdash; across every listing.</p>
+        <div class="lp-status-list" style="margin-top:20px;">
+          <div class="lp-status-row"><span>Pending</span><strong>12</strong></div>
+          <div class="lp-status-row lp-status-row--highlight"><span>Reviewing</span><strong>5</strong></div>
+          <div class="lp-status-row"><span>Interviewing</span><strong>2</strong></div>
+          <div class="lp-status-row lp-status-row--muted"><span>Hired</span><strong>1</strong></div>
+        </div>
+      </article>
     </div>
   </section>
 
-  <!-- HOW IT WORKS -->
-  <section class="section-container">
-    <div class="section-label reveal">How it works</div>
-    <h2 class="section-title reveal">Two sides.<br>One platform.</h2>
+  <!-- SHOWCASE: Dashboard + Profile -->
+  <section class="lp-section">
+    <span class="lp-eyebrow reveal">Built for the way you work</span>
+    <h2 class="lp-section-title reveal">Two screens.<br><span style="color: var(--text-muted)">One source of truth.</span></h2>
 
-    <div class="roles-grid">
-      <div class="role-card reveal">
-        <div class="role-icon applicant-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="12" cy="8" r="4" fill="currentColor"/>
-            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
+    <div class="lp-showcase">
+      <article class="lp-showcase-card reveal">
+        <span class="lp-showcase-eyebrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect></svg>
+          Dashboard
+        </span>
+        <h3>Your hiring command center.</h3>
+        <p>Applicants, listings, time-to-fill, and slot capacity in one glance. Web for deep work, mobile for the moment &mdash; perfectly in sync.</p>
+        <div class="lp-showcase-shot">
+          <img src="screenshots/Dashboard_view.png" alt="Business dashboard screenshot">
         </div>
-        <h3>For Applicants</h3>
-        <ul>
-          <li>Build your profile with an intro video</li>
-          <li>Browse local gigs with a swipe</li>
-          <li>Apply instantly &mdash; r&eacute;sum&eacute;, certs, and licenses are optional</li>
-          <li>Chat directly with employers</li>
-        </ul>
-      </div>
-      <div class="role-card reveal">
-        <div class="role-icon biz-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="2" y="7" width="20" height="14" rx="2" stroke="currentColor" stroke-width="2"/>
-            <path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2" stroke="currentColor" stroke-width="2"/>
-            <line x1="12" y1="12" x2="12" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            <line x1="10" y1="14" x2="14" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
+      </article>
+
+      <article class="lp-showcase-card reveal">
+        <span class="lp-showcase-eyebrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          Business Profile
+        </span>
+        <h3>Your business, front and center.</h3>
+        <p>A polished public page so candidates know exactly who they&rsquo;re applying to &mdash; photos, bio, socials, and verified status all in one place.</p>
+        <div class="lp-showcase-shot">
+          <img src="screenshots/profile_view.png" alt="Business profile screenshot">
         </div>
-        <h3>For Businesses</h3>
-        <ul>
-          <li>Post a listing in minutes</li>
-          <li>Review applicants with video and photos</li>
-          <li>Message and hire from your phone</li>
-          <li>Skip the paperwork</li>
-        </ul>
-      </div>
+      </article>
     </div>
   </section>
 
-  <!-- USER STORIES -->
-  <section class="section-container user-stories-section">
-    <div class="section-label reveal">User stories</div>
-    <h2 class="section-title reveal">From setup<br>to first hire.</h2>
+  <!-- HOW IT WORKS: 3-step flow with gradient line + badges -->
+  <section class="lp-section">
+    <span class="lp-eyebrow reveal">How it works</span>
+    <h2 class="lp-section-title reveal">Three steps<br>to your next hire.</h2>
 
-    <div class="user-stories-grid">
-      <a href="https://apps.apple.com/us/app/sidequest-find-local-jobs/id6760982014" target="_blank" class="user-story-card reveal">
-        <img src="screenshots/User Story Creation - User Story 2 - Business Profile.png" alt="User story: Build your local presence &mdash; set up your business profile, share your story, and connect with your community.">
-      </a>
-      <a href="https://apps.apple.com/us/app/sidequest-find-local-jobs/id6760982014" target="_blank" class="user-story-card reveal">
-        <img src="screenshots/User Story Creation - User Story 1 - Post a Job.png" alt="User story: Hire locally in minutes &mdash; create a listing, set your pay, and start receiving applicants instantly.">
-      </a>
-    </div>
-  </section>
-
-  <!-- THE HIRING FLOW -->
-  <section class="section-container flow-section">
-    <div class="section-label reveal">The hiring flow</div>
-    <h2 class="section-title reveal">Three steps<br>to your next hire.</h2>
-
-    <div class="flow-swipe-hint reveal" aria-hidden="true">
-      <span>Swipe for more</span>
-      <span class="arrow">→</span>
-    </div>
-
-    <div class="flow-grid-wrap reveal">
-      <div class="flow-grid">
-        <img src="screenshots/job_listings_details_v2.png" alt="See everything at a glance &mdash; job listings with pay, location, and requirements" class="flow-card">
-        <img src="screenshots/messaging_v2.png" alt="Message candidates instantly &mdash; direct in-app chat" class="flow-card">
-        <img src="screenshots/track_applicants_v2.png" alt="All your candidates in one place &mdash; review profiles, track status, and hire fast" class="flow-card">
+    <div class="lp-stepflow reveal">
+      <div class="lp-stepflow-line" aria-hidden="true"></div>
+      <div class="lp-stepflow-grid">
+        <div class="lp-step">
+          <div class="lp-step-badge">1</div>
+          <img class="lp-step-phone" src="screenshots/new_listing_step1.png" alt="Choose a role">
+          <h3>Role</h3>
+          <p>Job title, type, and a short description &mdash; under a minute.</p>
+        </div>
+        <div class="lp-step">
+          <div class="lp-step-badge">2</div>
+          <img class="lp-step-phone" src="screenshots/new_listing_step2.png" alt="Set pay and location">
+          <h3>Pay &amp; Location</h3>
+          <p>Hourly pay, shifts, and exactly where the work happens.</p>
+        </div>
+        <div class="lp-step">
+          <div class="lp-step-badge">3</div>
+          <img class="lp-step-phone" src="screenshots/new_listing_step3.png" alt="Publish the listing">
+          <h3>Publish</h3>
+          <p>Review and post &mdash; live in the applicant feed instantly.</p>
+        </div>
       </div>
-      <div class="flow-fade" aria-hidden="true"></div>
     </div>
   </section>
 
   <!-- MISSION -->
-  <section class="section-container mission-section reveal">
-    <div class="mission-card">
-      <div class="section-label">Our mission</div>
+  <section class="lp-section">
+    <div class="lp-mission reveal">
+      <span class="lp-eyebrow">Our mission</span>
       <h2>Built for local.<br>Not for HR.</h2>
       <p>Local businesses need better hiring tools than what enterprise HR sells. SideQuest leads with video, photos, and direct chat. R&eacute;sum&eacute;s and certs are there if they help &mdash; never the only thing standing between you and a hire.</p>
+    </div>
+  </section>
+
+  <!-- FINAL CTA — App Store only, no signup -->
+  <section class="lp-section">
+    <div class="lp-final-cta reveal">
+      <h2>Ready to hire<br>without the bloat?</h2>
+      <p>Free for your first listing. No credit card to start.</p>
+      <div class="store-pills">
+        <a href="https://apps.apple.com/us/app/sidequest-find-local-jobs/id6760982014" target="_blank" rel="noopener" class="app-store-btn pulse-btn">
+          <svg class="apple-icon" viewBox="0 0 384 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+          </svg>
+          <div class="app-store-text">
+            <span class="download-text">Download on the</span>
+            <span class="store-name">App Store</span>
+          </div>
+        </a>
+      </div>
+      <p class="android-coming" style="margin-top: 16px;">Coming soon to Android</p>
     </div>
   </section>
 
@@ -523,7 +268,7 @@
       <a href="/privacy.html">Privacy Policy</a>
       <a href="/terms.html">Terms of Service</a>
     </div>
-    <p class="footer-copyright">&copy; 2025 SideQuest Labs LLC</p>
+    <p class="footer-copyright">&copy; 2026 SideQuest Labs LLC</p>
   </footer>
 
   <script>
@@ -537,70 +282,56 @@
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-    // Stories carousel
-    (function initStoriesCarousel() {
-      const carousel = document.getElementById('storiesCarousel');
-      if (!carousel) return;
+    // Hero phone-stack: click a back phone OR a pagination dot to bring
+    // the matching screen to the front. Mirrors the React `PhoneStack`
+    // component in web/src/components/landing.
+    (function initPhoneStack() {
+      const stack = document.getElementById('heroStack');
+      if (!stack) return;
+      const dotsRoot = document.getElementById('heroDots');
+      const phones = Array.from(stack.querySelectorAll('.lp-phone'));
+      const dots = dotsRoot ? Array.from(dotsRoot.querySelectorAll('.lp-hero-dot')) : [];
+      // order[0] = front, [1] = left, [2] = right
+      let order = phones.map(p => p.dataset.id);
 
-      const cards = Array.from(carousel.querySelectorAll('.story-card'));
-      const dots = Array.from(document.querySelectorAll('.stories-dot'));
-      const prevBtn = document.getElementById('storyPrev');
-      const nextBtn = document.getElementById('storyNext');
-      let activeIndex = 1; // Card 2 starts centered
-
-      function setActive(idx) {
-        activeIndex = idx;
-        cards.forEach((c, i) => c.classList.toggle('is-active', i === idx));
-        dots.forEach((d, i) => d.classList.toggle('is-active', i === idx));
-        prevBtn.disabled = idx === 0;
-        nextBtn.disabled = idx === cards.length - 1;
+      function labelFor(id) {
+        return id === 'dashboard' ? 'Business dashboard'
+             : id === 'profile'   ? 'Business profile'
+             : 'Creating a job listing';
       }
 
-      function scrollToCard(idx, behavior = 'smooth') {
-        const card = cards[idx];
-        const carouselRect = carousel.getBoundingClientRect();
-        const cardRect = card.getBoundingClientRect();
-        const offset = (cardRect.left - carouselRect.left) - (carouselRect.width - cardRect.width) / 2;
-        carousel.scrollBy({ left: offset, behavior });
-        setActive(idx);
-      }
-
-      // Detect centered card on scroll
-      let scrollTick = null;
-      carousel.addEventListener('scroll', () => {
-        if (scrollTick) cancelAnimationFrame(scrollTick);
-        scrollTick = requestAnimationFrame(() => {
-          const carouselRect = carousel.getBoundingClientRect();
-          const carouselCenter = carouselRect.left + carouselRect.width / 2;
-          let closestIdx = 0;
-          let closestDist = Infinity;
-          cards.forEach((card, i) => {
-            const rect = card.getBoundingClientRect();
-            const cardCenter = rect.left + rect.width / 2;
-            const dist = Math.abs(cardCenter - carouselCenter);
-            if (dist < closestDist) { closestDist = dist; closestIdx = i; }
-          });
-          if (closestIdx !== activeIndex) setActive(closestIdx);
+      function applyOrder() {
+        const [front, left, right] = order;
+        phones.forEach(p => {
+          const id = p.dataset.id;
+          const slot = id === front ? 'front' : id === left ? 'left' : 'right';
+          p.dataset.slot = slot;
+          p.setAttribute('aria-pressed', slot === 'front' ? 'true' : 'false');
+          p.setAttribute('aria-label', slot === 'front'
+            ? `${labelFor(id)} — currently in front`
+            : `Bring ${labelFor(id)} to the front`);
         });
-      }, { passive: true });
+        dots.forEach(d => {
+          const isActive = d.dataset.target === front;
+          d.classList.toggle('is-active', isActive);
+          d.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        });
+      }
 
-      prevBtn.addEventListener('click', () => {
-        if (activeIndex > 0) scrollToCard(activeIndex - 1);
-      });
-      nextBtn.addEventListener('click', () => {
-        if (activeIndex < cards.length - 1) scrollToCard(activeIndex + 1);
-      });
-      dots.forEach((dot, i) => dot.addEventListener('click', () => scrollToCard(i)));
+      function bringToFront(id) {
+        const idx = order.indexOf(id);
+        if (idx <= 0) return; // already front
+        const next = order.slice();
+        [next[0], next[idx]] = [next[idx], next[0]];
+        order = next;
+        applyOrder();
+      }
 
-      // Keyboard nav
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft' && activeIndex > 0) scrollToCard(activeIndex - 1);
-        if (e.key === 'ArrowRight' && activeIndex < cards.length - 1) scrollToCard(activeIndex + 1);
+      phones.forEach(p => {
+        p.addEventListener('click', () => bringToFront(p.dataset.id));
       });
-
-      // Initialize centered on card 2
-      window.requestAnimationFrame(() => {
-        scrollToCard(1, 'auto');
+      dots.forEach(d => {
+        d.addEventListener('click', () => bringToFront(d.dataset.target));
       });
     })();
   </script>
